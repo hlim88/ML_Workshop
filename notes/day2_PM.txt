@@ -1,0 +1,1221 @@
+>>> # MLW 2022-05-10 Day 2 PM
+>>> # Example slide 1143
+>>> # Example slide 113
+>>> import numpy as np
+>>> a = np.array([0, 1, 2, 3])
+>>> (a - a.mean())/a.std()
+array([-1.34164079, -0.4472136 ,  0.4472136 ,  1.34164079])
+>>> np.round((a - a.mean())/a.std(),2)
+array([-1.34, -0.45,  0.45,  1.34])
+>>> a = np.array([-2, -1, 0, 1, 2])
+>>> (a - a.mean())/a.std()
+array([-1.41421356, -0.70710678,  0.        ,  0.70710678,  1.41421356])
+>>> from sklearn.preprocessing import StandardScaler
+>>> scaler = StandScaler()
+>>> scaler = StandardScaler()
+>>> scaler.fit(a)
+>>> scaler.fit(a.reshape(-1,1))
+StandardScaler(copy=True, with_mean=True, with_std=True)
+>>> scaler.transform(a.reshape(-1,1))
+array([[-1.41421356],
+       [-0.70710678],
+       [ 0.        ],
+       [ 0.70710678],
+       [ 1.41421356]])
+>>> (a - a.mean())/a.std()
+array([-1.41421356, -0.70710678,  0.        ,  0.70710678,  1.41421356])
+>>> scaler.mean_
+array([0.])
+>>> scaler.var_
+array([2.])
+>>> scaler.scale_
+array([1.41421356])
+>>> clear
+>>> # Iris example
+>>> from sklearn import datasets
+>>> iris = datasets.load_iris()
+>>> scaler = StandardScaler()
+>>> iris.data
+array([[5.1, 3.5, 1.4, 0.2],
+       [4.9, 3. , 1.4, 0.2],
+       [4.7, 3.2, 1.3, 0.2],
+       [4.6, 3.1, 1.5, 0.2],
+       [5. , 3.6, 1.4, 0.2],
+       [5.4, 3.9, 1.7, 0.4],
+       [4.6, 3.4, 1.4, 0.3],
+       [5. , 3.4, 1.5, 0.2],
+       [4.4, 2.9, 1.4, 0.2],
+       [4.9, 3.1, 1.5, 0.1],
+       [5.4, 3.7, 1.5, 0.2],
+       [4.8, 3.4, 1.6, 0.2],
+       [4.8, 3. , 1.4, 0.1],
+       [4.3, 3. , 1.1, 0.1],
+       [5.8, 4. , 1.2, 0.2],
+       [5.7, 4.4, 1.5, 0.4],
+       [5.4, 3.9, 1.3, 0.4],
+       [5.1, 3.5, 1.4, 0.3],
+       [5.7, 3.8, 1.7, 0.3],
+       [5.1, 3.8, 1.5, 0.3],
+       [5.4, 3.4, 1.7, 0.2],
+       [5.1, 3.7, 1.5, 0.4],
+       [4.6, 3.6, 1. , 0.2],
+       [5.1, 3.3, 1.7, 0.5],
+       [4.8, 3.4, 1.9, 0.2],
+       [5. , 3. , 1.6, 0.2],
+       [5. , 3.4, 1.6, 0.4],
+       [5.2, 3.5, 1.5, 0.2],
+       [5.2, 3.4, 1.4, 0.2],
+       [4.7, 3.2, 1.6, 0.2],
+       [4.8, 3.1, 1.6, 0.2],
+       [5.4, 3.4, 1.5, 0.4],
+       [5.2, 4.1, 1.5, 0.1],
+       [5.5, 4.2, 1.4, 0.2],
+       [4.9, 3.1, 1.5, 0.2],
+       [5. , 3.2, 1.2, 0.2],
+       [5.5, 3.5, 1.3, 0.2],
+       [4.9, 3.6, 1.4, 0.1],
+       [4.4, 3. , 1.3, 0.2],
+       [5.1, 3.4, 1.5, 0.2],
+       [5. , 3.5, 1.3, 0.3],
+       [4.5, 2.3, 1.3, 0.3],
+       [4.4, 3.2, 1.3, 0.2],
+       [5. , 3.5, 1.6, 0.6],
+       [5.1, 3.8, 1.9, 0.4],
+       [4.8, 3. , 1.4, 0.3],
+       [5.1, 3.8, 1.6, 0.2],
+       [4.6, 3.2, 1.4, 0.2],
+       [5.3, 3.7, 1.5, 0.2],
+       [5. , 3.3, 1.4, 0.2],
+       [7. , 3.2, 4.7, 1.4],
+       [6.4, 3.2, 4.5, 1.5],
+       [6.9, 3.1, 4.9, 1.5],
+       [5.5, 2.3, 4. , 1.3],
+       [6.5, 2.8, 4.6, 1.5],
+       [5.7, 2.8, 4.5, 1.3],
+       [6.3, 3.3, 4.7, 1.6],
+       [4.9, 2.4, 3.3, 1. ],
+       [6.6, 2.9, 4.6, 1.3],
+       [5.2, 2.7, 3.9, 1.4],
+       [5. , 2. , 3.5, 1. ],
+       [5.9, 3. , 4.2, 1.5],
+       [6. , 2.2, 4. , 1. ],
+       [6.1, 2.9, 4.7, 1.4],
+       [5.6, 2.9, 3.6, 1.3],
+       [6.7, 3.1, 4.4, 1.4],
+       [5.6, 3. , 4.5, 1.5],
+       [5.8, 2.7, 4.1, 1. ],
+       [6.2, 2.2, 4.5, 1.5],
+       [5.6, 2.5, 3.9, 1.1],
+       [5.9, 3.2, 4.8, 1.8],
+       [6.1, 2.8, 4. , 1.3],
+       [6.3, 2.5, 4.9, 1.5],
+       [6.1, 2.8, 4.7, 1.2],
+       [6.4, 2.9, 4.3, 1.3],
+       [6.6, 3. , 4.4, 1.4],
+       [6.8, 2.8, 4.8, 1.4],
+       [6.7, 3. , 5. , 1.7],
+       [6. , 2.9, 4.5, 1.5],
+       [5.7, 2.6, 3.5, 1. ],
+       [5.5, 2.4, 3.8, 1.1],
+       [5.5, 2.4, 3.7, 1. ],
+       [5.8, 2.7, 3.9, 1.2],
+       [6. , 2.7, 5.1, 1.6],
+       [5.4, 3. , 4.5, 1.5],
+       [6. , 3.4, 4.5, 1.6],
+       [6.7, 3.1, 4.7, 1.5],
+       [6.3, 2.3, 4.4, 1.3],
+       [5.6, 3. , 4.1, 1.3],
+       [5.5, 2.5, 4. , 1.3],
+       [5.5, 2.6, 4.4, 1.2],
+       [6.1, 3. , 4.6, 1.4],
+       [5.8, 2.6, 4. , 1.2],
+       [5. , 2.3, 3.3, 1. ],
+       [5.6, 2.7, 4.2, 1.3],
+       [5.7, 3. , 4.2, 1.2],
+       [5.7, 2.9, 4.2, 1.3],
+       [6.2, 2.9, 4.3, 1.3],
+       [5.1, 2.5, 3. , 1.1],
+       [5.7, 2.8, 4.1, 1.3],
+       [6.3, 3.3, 6. , 2.5],
+       [5.8, 2.7, 5.1, 1.9],
+       [7.1, 3. , 5.9, 2.1],
+       [6.3, 2.9, 5.6, 1.8],
+       [6.5, 3. , 5.8, 2.2],
+       [7.6, 3. , 6.6, 2.1],
+       [4.9, 2.5, 4.5, 1.7],
+       [7.3, 2.9, 6.3, 1.8],
+       [6.7, 2.5, 5.8, 1.8],
+       [7.2, 3.6, 6.1, 2.5],
+       [6.5, 3.2, 5.1, 2. ],
+       [6.4, 2.7, 5.3, 1.9],
+       [6.8, 3. , 5.5, 2.1],
+       [5.7, 2.5, 5. , 2. ],
+       [5.8, 2.8, 5.1, 2.4],
+       [6.4, 3.2, 5.3, 2.3],
+       [6.5, 3. , 5.5, 1.8],
+       [7.7, 3.8, 6.7, 2.2],
+       [7.7, 2.6, 6.9, 2.3],
+       [6. , 2.2, 5. , 1.5],
+       [6.9, 3.2, 5.7, 2.3],
+       [5.6, 2.8, 4.9, 2. ],
+       [7.7, 2.8, 6.7, 2. ],
+       [6.3, 2.7, 4.9, 1.8],
+       [6.7, 3.3, 5.7, 2.1],
+       [7.2, 3.2, 6. , 1.8],
+       [6.2, 2.8, 4.8, 1.8],
+       [6.1, 3. , 4.9, 1.8],
+       [6.4, 2.8, 5.6, 2.1],
+       [7.2, 3. , 5.8, 1.6],
+       [7.4, 2.8, 6.1, 1.9],
+       [7.9, 3.8, 6.4, 2. ],
+       [6.4, 2.8, 5.6, 2.2],
+       [6.3, 2.8, 5.1, 1.5],
+       [6.1, 2.6, 5.6, 1.4],
+       [7.7, 3. , 6.1, 2.3],
+       [6.3, 3.4, 5.6, 2.4],
+       [6.4, 3.1, 5.5, 1.8],
+       [6. , 3. , 4.8, 1.8],
+       [6.9, 3.1, 5.4, 2.1],
+       [6.7, 3.1, 5.6, 2.4],
+       [6.9, 3.1, 5.1, 2.3],
+       [5.8, 2.7, 5.1, 1.9],
+       [6.8, 3.2, 5.9, 2.3],
+       [6.7, 3.3, 5.7, 2.5],
+       [6.7, 3. , 5.2, 2.3],
+       [6.3, 2.5, 5. , 1.9],
+       [6.5, 3. , 5.2, 2. ],
+       [6.2, 3.4, 5.4, 2.3],
+       [5.9, 3. , 5.1, 1.8]])
+>>> iris.data.mean(axis=0)
+array([5.84333333, 3.05733333, 3.758     , 1.19933333])
+>>> iris.data.std(axis=0)
+array([0.82530129, 0.43441097, 1.75940407, 0.75969263])
+>>> scaler.fit(iris.data)
+StandardScaler(copy=True, with_mean=True, with_std=True)
+>>> data_scaled = scaler.transform(iris.data)
+>>> # some things in sklearn are TRANSFORMERS not models... in this case they will still have a .fit() but instead of .predict() they will have .transform()
+>>> data_scaled.mean(axis=0)
+array([-1.69031455e-15, -1.84297022e-15, -1.69864123e-15, -1.40924309e-15])
+>>> data_scaled.std(axis=0)
+array([1., 1., 1., 1.])
+>>> # Standard scaler "scales" our data so that the mean of feature is ~0 and the std of each =feature is ~1
+>>> # MaxAbsScaler
+>>> # RobustScaler
+>>> from sklearn.preprocessing import RobustSclaer, MinMaxScaler
+>>> from sklearn.preprocessing import RobustScaler, MinMaxScaler
+>>> RobustScaler?
+>>> # RobustScaler is "robust" to outliers because it used the median and IQR (inter quartile range)
+>>> robust_scaler = RobustScaler()
+>>> robust_scaler.fit(iris.data)
+RobustScaler(copy=True, quantile_range=(25.0, 75.0), with_centering=True,
+             with_scaling=True)
+>>> data_scaled_robust = robust_scaler.transform(iris.data)
+>>> data_scaled_robust.mean(axis=0)
+array([ 0.03333333,  0.11466667, -0.16914286, -0.06711111])
+>>> data_scaled_robust.var(axis=1)
+array([5.56878623e-01, 1.10238724e-01, 2.80394502e-01, 2.00973740e-01,
+       7.05269719e-01, 1.06584312e+00, 4.95144331e-01, 4.38773120e-01,
+       1.03221254e-01, 1.78229305e-01, 8.00921613e-01, 4.58274388e-01,
+       1.21895529e-01, 1.89130766e-01, 1.32854167e+00, 2.11018619e+00,
+       1.11348833e+00, 5.42556278e-01, 8.95290852e-01, 9.78367372e-01,
+       3.99158138e-01, 7.99154918e-01, 8.11609533e-01, 2.82519648e-01,
+       4.41924310e-01, 9.87181751e-02, 4.08846380e-01, 5.39814259e-01,
+       4.29552615e-01, 2.66399212e-01, 1.74153509e-01, 3.86306228e-01,
+       1.58805602e+00, 1.74337905e+00, 1.69950917e-01, 2.58009122e-01,
+       5.43972975e-01, 7.36887076e-01, 1.64767565e-01, 4.29319753e-01,
+       5.62475370e-01, 7.16709184e-02, 3.28851814e-01, 5.06392168e-01,
+       9.21431213e-01, 1.12096994e-01, 9.88184222e-01, 2.89631511e-01,
+       8.09487406e-01, 3.38401587e-01, 1.17920365e-01, 3.08529817e-02,
+       8.79507557e-02, 3.18590976e-01, 1.10842516e-01, 3.01626464e-02,
+       3.63424556e-02, 1.54626479e-01, 9.11383740e-02, 6.96154098e-02,
+       5.34866788e-01, 4.63151089e-03, 4.67851331e-01, 2.44884122e-02,
+       7.22338788e-03, 7.17824186e-02, 1.07895836e-02, 5.38137755e-02,
+       5.90714915e-01, 1.39222341e-01, 1.83023638e-02, 5.12832840e-02,
+       2.91002320e-01, 5.57704635e-02, 5.94845882e-02, 6.55313620e-02,
+       1.73258690e-01, 6.43282061e-02, 1.97639426e-02, 7.73604486e-02,
+       1.98763661e-01, 1.85710286e-01, 5.57185374e-02, 1.17333278e-01,
+       2.74914714e-02, 8.68701697e-02, 5.75751972e-02, 4.64395831e-01,
+       4.02087610e-03, 1.55129438e-01, 1.01149846e-01, 7.19641851e-03,
+       1.05208333e-01, 2.21727071e-01, 5.67053345e-02, 8.76932134e-04,
+       5.54726180e-03, 3.31743600e-02, 9.95395333e-02, 2.39617045e-02,
+       2.44350773e-02, 1.41466837e-01, 1.26058673e-01, 5.87862024e-02,
+       5.47043684e-02, 2.43859462e-01, 2.68553743e-01, 2.35624748e-01,
+       4.28412455e-01, 7.27921598e-02, 1.45029032e-02, 1.83919439e-01,
+       7.97422061e-02, 3.03281432e-01, 1.67181122e-01, 2.03663255e-02,
+       3.71978274e-02, 2.03315043e-01, 6.73443249e-01, 5.79586025e-01,
+       3.70951827e-02, 1.06229144e-01, 4.38772919e-01, 1.56203785e-01,
+       1.24967043e-02, 8.78994334e-02, 8.70414453e-02, 1.47526718e-02,
+       1.39607560e-01, 1.64087293e-01, 3.33975592e-01, 2.94212681e-01,
+       1.50285216e-01, 8.60075524e-02, 2.04990767e-01, 2.75918393e-01,
+       3.98118434e-02, 8.55313871e-03, 1.41307662e-02, 6.18256903e-02,
+       5.04401894e-02, 7.94761351e-02, 1.41466837e-01, 2.35255656e-02,
+       2.32293050e-02, 8.53119843e-02, 3.35549677e-01, 4.43328352e-02,
+       4.83444280e-02, 1.63583555e-02])
+>>> data_scaled_robust.mean(axis=0)
+array([ 0.03333333,  0.11466667, -0.16914286, -0.06711111])
+>>> data_scaled_robust.var(axis=0)
+array([0.4030309 , 0.75485156, 0.2526941 , 0.25650351])
+>>> a = np.array([-2, -1, 0, 1, np.nan])
+>>> a
+array([-2., -1.,  0.,  1., nan])
+>>> a - a.mean()
+array([nan, nan, nan, nan, nan])
+>>> (a - a.mean())/a.std()
+array([nan, nan, nan, nan, nan])
+>>> iris.data.max(axis=0)
+array([7.9, 4.4, 6.9, 2.5])
+>>> iris.data.min(axis=0)
+array([4.3, 2. , 1. , 0.1])
+>>> MinMaxScaler?
+>>> # rather than seeing a mean of 0 and std of 1, the min will be 0 and the max will be 1
+>>> data_scaled_robust.std(axis=0)
+array([0.63484715, 0.86882194, 0.50268688, 0.50646175])
+>>> min_max_scaler = MinMaxScaler()
+>>> data_scaled_min_max = min_max_scaler.fit_transform(iris.data)  # I can fit and transform at the same time (this will return my scaled data, but also save the scaling factors in the transformer)
+>>> data_scaled_min_max.min(axis=0)
+array([0., 0., 0., 0.])
+>>> data_scaled_min_max.max(axis=1)
+array([0.625     , 0.41666667, 0.5       , 0.45833333, 0.66666667,
+       0.79166667, 0.58333333, 0.58333333, 0.375     , 0.45833333,
+       0.70833333, 0.58333333, 0.41666667, 0.41666667, 0.83333333,
+       1.        , 0.79166667, 0.625     , 0.75      , 0.75      ,
+       0.58333333, 0.70833333, 0.66666667, 0.54166667, 0.58333333,
+       0.41666667, 0.58333333, 0.625     , 0.58333333, 0.5       ,
+       0.45833333, 0.58333333, 0.875     , 0.91666667, 0.45833333,
+       0.5       , 0.625     , 0.66666667, 0.41666667, 0.58333333,
+       0.625     , 0.125     , 0.5       , 0.625     , 0.75      ,
+       0.41666667, 0.75      , 0.5       , 0.70833333, 0.54166667,
+       0.75      , 0.59322034, 0.72222222, 0.50847458, 0.61111111,
+       0.59322034, 0.62711864, 0.38983051, 0.63888889, 0.54166667,
+       0.42372881, 0.58333333, 0.50847458, 0.62711864, 0.5       ,
+       0.66666667, 0.59322034, 0.52542373, 0.59322034, 0.49152542,
+       0.70833333, 0.50847458, 0.66101695, 0.62711864, 0.58333333,
+       0.63888889, 0.69444444, 0.6779661 , 0.59322034, 0.42372881,
+       0.47457627, 0.45762712, 0.49152542, 0.69491525, 0.59322034,
+       0.625     , 0.66666667, 0.57627119, 0.52542373, 0.50847458,
+       0.57627119, 0.61016949, 0.50847458, 0.38983051, 0.54237288,
+       0.54237288, 0.54237288, 0.55932203, 0.41666667, 0.52542373,
+       1.        , 0.75      , 0.83333333, 0.77966102, 0.875     ,
+       0.94915254, 0.66666667, 0.89830508, 0.81355932, 1.        ,
+       0.79166667, 0.75      , 0.83333333, 0.79166667, 0.95833333,
+       0.91666667, 0.76271186, 0.96610169, 1.        , 0.6779661 ,
+       0.91666667, 0.79166667, 0.96610169, 0.70833333, 0.83333333,
+       0.84745763, 0.70833333, 0.70833333, 0.83333333, 0.81355932,
+       0.86440678, 1.        , 0.875     , 0.69491525, 0.77966102,
+       0.94444444, 0.95833333, 0.76271186, 0.70833333, 0.83333333,
+       0.95833333, 0.91666667, 0.75      , 0.91666667, 1.        ,
+       0.91666667, 0.75      , 0.79166667, 0.91666667, 0.70833333])
+>>> data_scaled_min_max.max(axis=0)
+array([1., 1., 1., 1.])
+>>> MinMaxScaler?
+>>> min_max_scaler = MinMaxScaler(feature_range=(-1, 1))
+>>> data_scaled_min_max = min_max_scaler.fit_transform(iris.data)  # this will give a min of -1 and a max of 1 per features
+>>> data_scaled_min_max.min(axis=0)
+array([-1., -1., -1., -1.])
+>>> data_scaled_min_max.max(axis=0)
+array([1., 1., 1., 1.])
+>>> # WARNING!
+>>> clear
+>>> # Example Workflow
+>>> iris = datasets.load_iris()
+>>> X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.3, stratify=iris.target, random_state=42)
+>>> from sklearn.model_selection import train_test_split
+>>> X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.3, stratify=iris.target, random_state=42)
+>>> X_train.shape
+(105, 4)
+>>> X_test.shape
+(45, 4)
+>>> y_train.shape
+(105,)
+>>> y_test.shape
+(45,)
+>>> scaler = StandardScaler()
+>>> # Fit and transfrom all in one step
+>>> new_train = scaler.fit_transform(X_train)
+>>> # This should yield a mean of 0 and std of 1 per feature
+>>> new_train.mean(axis=1)
+array([-0.6748256 , -0.17901715, -0.43022861,  1.00064183, -0.11584426,
+        0.76308535, -0.93765871, -0.44845488, -1.17486577,  0.91347268,
+        0.70375129, -0.97437497, -0.91710481,  0.14736129, -0.50068751,
+        0.96962808, -0.63272163, -0.8945487 ,  1.06292726,  0.42223957,
+       -0.53036326,  0.27804576,  1.1575827 ,  1.05858101, -0.02418546,
+       -0.80962727, -0.45286462, -0.28381109,  0.57555425, -0.35297142,
+        0.10639104, -0.60913646, -0.23859671, -0.16041263, -1.03579115,
+       -0.9711781 ,  0.41462716,  0.21454746,  1.62398492, -0.64144299,
+        0.55757928, -0.95181886, -0.1668352 , -0.53908463,  0.9887294 ,
+       -0.46917033, -0.71331323,  1.18090415, -0.0134859 ,  0.07219607,
+       -0.20214417, -1.45718506, -0.54707428,  0.61140706,  0.21318721,
+        0.48649259, -0.68230527, -0.04682147, -0.61561011,  0.48917444,
+        0.33523021, -0.31218904,  1.42962414,  0.15426425,  0.17102635,
+        0.95504441,  0.19383377, -0.90535218,  1.00159099,  0.25204727,
+       -0.03506884,  1.07377602, -0.3009044 ,  0.79972171,  0.35459525,
+       -0.17365826, -0.92038159,  1.67261941,  0.76982271, -0.34160108,
+       -1.22358017,  0.28979839,  0.76696946,  0.40943967, -0.22749009,
+        0.19296452, -0.94055319,  0.93370117,  0.85446402, -0.45925836,
+        0.05276934, -0.2740144 ,  0.59913941,  0.07124112,  0.13095342,
+       -0.59825308,  0.83979465, -0.24300645,  0.19296452, -0.75555398,
+       -0.67702628, -0.40713041, -0.14040663, -0.18581619, -0.99268114])
+>>> new_train.mean(axis=0)
+array([ 2.38327876e-15, -1.12145742e-15, -1.37456184e-16, -6.97854473e-17])
+>>> new_train.std(axis=0)
+array([1., 1., 1., 1.])
+>>> # We then APPLY the learned scaling from training to test data set
+>>> new_test = scaler.transform(X_test)
+>>> # NEVER a .fit nor a .fit_transform on the TEST set
+>>> new_test.mean(axis=0)
+array([-0.11643861,  0.01534903, -0.05024191, -0.02748619])
+>>> new_test.std(axis=0)
+array([0.85754489, 0.83947065, 0.96847064, 0.9374037 ])
+>>> # The above should be close to mean 0 and close to std 1 but not exact
+>>> # NEVER want to do new_test = scaler.fit_transform(X_test)
+>>> # ONLY use .transform() on the test set
+>>> # Data Leakage
+>>> # Always want to LEARN from train and APPLY to test
+>>> # DOnt want to learn from the entire dataset because we will be "leaking" information from the test set to the training set
+>>> # THis could artificially inflate our "out of sample" score
+>>> # (1) Always scale AFTER data partitioning
+>>> # (2) Never learn from test data (only learn from training data and apply to test)
+>>> # Workflow -> split into train, test; fit_transform on train; transform test
+>>> X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.3, stratify=iris.target, random_state=42)
+>>> scaler = StandardScaler()
+>>> X_train_scaled = scaler.fit_transform(X_train)
+>>> X_test_scaled = scaler.transform(X_test)
+>>> from sklearn.svm import SVC
+>>> model = SVC()
+>>> model.fit(X_train_scaled, y_train)
+SVC(C=1.0, break_ties=False, cache_size=200, class_weight=None, coef0=0.0,
+    decision_function_shape='ovr', degree=3, gamma='scale', kernel='rbf',
+    max_iter=-1, probability=False, random_state=None, shrinking=True,
+    tol=0.001, verbose=False)
+>>> model.score(X_train_scaled, y_train)
+0.9714285714285714
+>>> model.predict(X_train_scaled)
+array([1, 1, 0, 2, 1, 2, 0, 0, 0, 2, 2, 0, 0, 1, 1, 2, 0, 0, 2, 2, 0, 2,
+       2, 2, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 2, 2, 0, 2, 0, 1, 0,
+       2, 1, 0, 2, 1, 2, 1, 0, 1, 2, 1, 2, 0, 1, 0, 1, 1, 1, 2, 2, 1, 2,
+       2, 0, 2, 1, 1, 2, 0, 2, 2, 1, 0, 2, 2, 0, 0, 2, 2, 2, 0, 2, 1, 2,
+       2, 0, 1, 1, 1, 1, 1, 0, 2, 1, 2, 0, 0, 1, 0, 1, 0])
+>>> model.score(X_test_scaled, y_test)
+0.9333333333333333
+>>> model.predict(X_test_scaled)
+array([2, 1, 1, 1, 2, 2, 1, 1, 0, 2, 0, 0, 2, 2, 0, 2, 1, 0, 0, 0, 1, 0,
+       1, 2, 2, 1, 1, 1, 1, 0, 2, 2, 1, 0, 2, 0, 0, 0, 0, 2, 1, 0, 1, 2,
+       1])
+>>> # We will talk about pipelines later on in the course... helps us not to forget to scaled the test data
+>>> clear
+>>> iris = datasets.load_iris()
+>>> X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.3, stratify=iris.target, random_state=42)
+>>> scaler = StandardScaler()
+>>> X_train_scaled = scaler.fit_transform(X_train)
+>>> model = SVC()
+>>> model.fit(X_train_scaled, y_train)
+SVC(C=1.0, break_ties=False, cache_size=200, class_weight=None, coef0=0.0,
+    decision_function_shape='ovr', degree=3, gamma='scale', kernel='rbf',
+    max_iter=-1, probability=False, random_state=None, shrinking=True,
+    tol=0.001, verbose=False)
+>>> model.score(X_train_scaled, y_train)
+0.9714285714285714
+>>> model.score(X_test, y_test)
+0.3333333333333333
+>>> X_test_scaled = scaler.transform(X_train)
+>>> model.score(X_test_scaled, y_test)
+>>> X_test_scaled = scaler.transform(X_test)
+>>> model.score(X_test_scaled, y_test)
+0.9333333333333333
+>>> model.score(X_test, y_test)
+0.3333333333333333
+>>> model.score(X_train_scaled, y_train)
+0.9714285714285714
+>>> clear
+>>> # Slide 117
+>>> from sklearn.preprocessing import MaxAbsScaler
+>>> iris = datasets.load_iris()
+>>> iris.data.abs().max(axis=0)
+>>> np.abs(iris.data).max(axis=0)
+array([7.9, 4.4, 6.9, 2.5])
+>>> np.abs(iris.data).min(axis=0)
+array([4.3, 2. , 1. , 0.1])
+>>> scaler = MaxAbsScaler()
+>>> # scaler.fit(iris.data)
+>>> # data_scaled = scaler.transform(iris.data)
+>>> # one shot
+>>> data_scaled = scaler.fit_transform(iris.data)
+>>> data_scaled.max(axis=0)
+array([1., 1., 1., 1.])
+>>> data_scaled.min(axis=0)
+array([0.5443038 , 0.45454545, 0.14492754, 0.04      ])
+>>> MaxAbsScaler?
+>>> %matplotlib qt
+>>> import matplotlib.pyplot as plt
+>>> plt.figure()
+<Figure size 1280x960 with 0 Axes>
+>>> plt.subplot(2, 1, 1)
+<AxesSubplot:>
+>>> plt.hist(iris.data[:, 0], label='raw', color='CO')
+>>> plt.hist(iris.data[:, 0], label='raw', color='C0')
+(array([ 9., 23., 14., 27., 16., 26., 18.,  6.,  5.,  6.]),
+ array([4.3 , 4.66, 5.02, 5.38, 5.74, 6.1 , 6.46, 6.82, 7.18, 7.54, 7.9 ]),
+ <BarContainer object of 10 artists>)
+>>> plt.hist(data_scaled[:, 0], label='MaxAbsScaled', color='C1')
+(array([ 9., 23., 14., 27., 16., 26., 18.,  6.,  5.,  6.]),
+ array([0.5443038 , 0.58987342, 0.63544304, 0.68101266, 0.72658228,
+        0.7721519 , 0.81772152, 0.86329114, 0.90886076, 0.95443038,
+        1.        ]),
+ <BarContainer object of 10 artists>)
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7faaca5da080>
+>>> plt.title(f'Hist for Scaling {iris.feature_names[0]}')
+Text(0.5, 1.0, 'Hist for Scaling sepal length (cm)')
+>>> plt.figure()
+<Figure size 1280x960 with 0 Axes>
+>>> plt.subplot(2, 1, 1)
+<AxesSubplot:>
+>>> plt.hist(iris.data[:, 0], label='raw', color='C0')
+(array([ 9., 23., 14., 27., 16., 26., 18.,  6.,  5.,  6.]),
+ array([4.3 , 4.66, 5.02, 5.38, 5.74, 6.1 , 6.46, 6.82, 7.18, 7.54, 7.9 ]),
+ <BarContainer object of 10 artists>)
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7faaca677f60>
+>>> plt.title(f'Hist for Scaling {iris.feature_names[0]}')
+Text(0.5, 1.0, 'Hist for Scaling sepal length (cm)')
+>>> plt.subplot(2, 1, 2)
+<AxesSubplot:>
+>>> plt.hist(data_scaled[:, 0], label='MaxAbsScaled', color='C1')
+(array([ 9., 23., 14., 27., 16., 26., 18.,  6.,  5.,  6.]),
+ array([0.5443038 , 0.58987342, 0.63544304, 0.68101266, 0.72658228,
+        0.7721519 , 0.81772152, 0.86329114, 0.90886076, 0.95443038,
+        1.        ]),
+ <BarContainer object of 10 artists>)
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7faacaec8cc0>
+>>> # Scaling Summary
+>>> # Scale AFTER train/test split
+>>> # Apply to test and learn from (ie .fit) on train
+>>> # demo/ml_sklearn/concrete/README.ipynb
+>>> # why does mse say neg_mse?
+>>> # Example
+>>> # Lets say we are in a classifcation problem and accuracy is our metric
+>>> # output = [0.85, 0.95, 0.97, 0.73]
+>>> # what is the best score in this case?
+>>> # Best score? 0.97
+>>> # Lets say wer are in a regressoin problem and mse is our metric (mean squared error)
+>>> # output = [0.5, 0.23, 0.1, 1.5]
+>>> # what is the best score in this case?
+>>> # Best score? 0.1
+>>> # In a classification sense, we want to MAXIMIZE the acc
+>>> # In a regression sense, we want to MINIMIZE the error
+>>> # Rather than creating 2 differe optimization, one for maximizing and one for minimizing, we can use the same backend and negatve the minimization thus  making it a maximization
+>>> # min( [0.5, 0.23, 0.1, 1.5])
+>>> # max( [-0.5, -0.23, -0.1, -1.5])
+>>> # Slide 123 Example
+>>> clear
+>>> import numpy as np
+>>> from sklearn import datasets
+>>> from sklearn.linear_model import LinearRegression
+>>> diabetes = datasets.load_diabetes()
+>>> print(diabetes.DESCR)
+>>> diabetes.data.shape
+(442, 10)
+>>> diabetes.target
+array([151.,  75., 141., 206., 135.,  97., 138.,  63., 110., 310., 101.,
+        69., 179., 185., 118., 171., 166., 144.,  97., 168.,  68.,  49.,
+        68., 245., 184., 202., 137.,  85., 131., 283., 129.,  59., 341.,
+        87.,  65., 102., 265., 276., 252.,  90., 100.,  55.,  61.,  92.,
+       259.,  53., 190., 142.,  75., 142., 155., 225.,  59., 104., 182.,
+       128.,  52.,  37., 170., 170.,  61., 144.,  52., 128.,  71., 163.,
+       150.,  97., 160., 178.,  48., 270., 202., 111.,  85.,  42., 170.,
+       200., 252., 113., 143.,  51.,  52., 210.,  65., 141.,  55., 134.,
+        42., 111.,  98., 164.,  48.,  96.,  90., 162., 150., 279.,  92.,
+        83., 128., 102., 302., 198.,  95.,  53., 134., 144., 232.,  81.,
+       104.,  59., 246., 297., 258., 229., 275., 281., 179., 200., 200.,
+       173., 180.,  84., 121., 161.,  99., 109., 115., 268., 274., 158.,
+       107.,  83., 103., 272.,  85., 280., 336., 281., 118., 317., 235.,
+        60., 174., 259., 178., 128.,  96., 126., 288.,  88., 292.,  71.,
+       197., 186.,  25.,  84.,  96., 195.,  53., 217., 172., 131., 214.,
+        59.,  70., 220., 268., 152.,  47.,  74., 295., 101., 151., 127.,
+       237., 225.,  81., 151., 107.,  64., 138., 185., 265., 101., 137.,
+       143., 141.,  79., 292., 178.,  91., 116.,  86., 122.,  72., 129.,
+       142.,  90., 158.,  39., 196., 222., 277.,  99., 196., 202., 155.,
+        77., 191.,  70.,  73.,  49.,  65., 263., 248., 296., 214., 185.,
+        78.,  93., 252., 150.,  77., 208.,  77., 108., 160.,  53., 220.,
+       154., 259.,  90., 246., 124.,  67.,  72., 257., 262., 275., 177.,
+        71.,  47., 187., 125.,  78.,  51., 258., 215., 303., 243.,  91.,
+       150., 310., 153., 346.,  63.,  89.,  50.,  39., 103., 308., 116.,
+       145.,  74.,  45., 115., 264.,  87., 202., 127., 182., 241.,  66.,
+        94., 283.,  64., 102., 200., 265.,  94., 230., 181., 156., 233.,
+        60., 219.,  80.,  68., 332., 248.,  84., 200.,  55.,  85.,  89.,
+        31., 129.,  83., 275.,  65., 198., 236., 253., 124.,  44., 172.,
+       114., 142., 109., 180., 144., 163., 147.,  97., 220., 190., 109.,
+       191., 122., 230., 242., 248., 249., 192., 131., 237.,  78., 135.,
+       244., 199., 270., 164.,  72.,  96., 306.,  91., 214.,  95., 216.,
+       263., 178., 113., 200., 139., 139.,  88., 148.,  88., 243.,  71.,
+        77., 109., 272.,  60.,  54., 221.,  90., 311., 281., 182., 321.,
+        58., 262., 206., 233., 242., 123., 167.,  63., 197.,  71., 168.,
+       140., 217., 121., 235., 245.,  40.,  52., 104., 132.,  88.,  69.,
+       219.,  72., 201., 110.,  51., 277.,  63., 118.,  69., 273., 258.,
+        43., 198., 242., 232., 175.,  93., 168., 275., 293., 281.,  72.,
+       140., 189., 181., 209., 136., 261., 113., 131., 174., 257.,  55.,
+        84.,  42., 146., 212., 233.,  91., 111., 152., 120.,  67., 310.,
+        94., 183.,  66., 173.,  72.,  49.,  64.,  48., 178., 104., 132.,
+       220.,  57.])
+>>> # skip data split for example purposes, but would normally do this in practive
+>>> model = LinearRegression()
+>>> print(model)
+>>> model.fit(diabetes.data, diabetes.target)
+LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
+>>> # Default is R2
+>>> model.score(diabetes.data, diabetes.target)
+0.5177494254132934
+>>> predicted = model.predict(diabetes.data)
+>>> predicted
+array([206.11706979,  68.07234761, 176.88406035, 166.91796559,
+       128.45984241, 106.34908972,  73.89417947, 118.85378669,
+       158.81033076, 213.58408893,  97.07853583,  95.1016223 ,
+       115.06673301, 164.67605023, 103.07517946, 177.17236996,
+       211.75953205, 182.84424343, 147.99987605, 124.01702527,
+       120.33094632,  85.80377894, 113.11286302, 252.44934852,
+       165.48821056, 147.72187623,  97.12824075, 179.09342974,
+       129.05497324, 184.78138552, 158.71515746,  69.47588393,
+       261.50255826, 112.81897436,  78.37194762,  87.66624129,
+       207.92460213, 157.87686037, 240.84370686, 136.93372685,
+       153.48187659,  74.15703284, 145.63105805,  77.8280105 ,
+       221.0786645 , 125.22224022, 142.60147066, 109.4926324 ,
+        73.14037106, 189.87368742, 157.93636782, 169.55816531,
+       134.18186217, 157.72356219, 139.1077439 ,  72.73252701,
+       207.8289973 ,  80.10834588, 104.08562488, 134.57807971,
+       114.23779529, 180.67760064,  61.12644508,  98.7215441 ,
+       113.79626149, 189.96141244, 148.98263155, 124.33457266,
+       114.83969622, 122.00224605,  73.91315064, 236.70948329,
+       142.31366526, 124.51427625, 150.84273716, 127.75408702,
+       191.16674356,  77.05921006, 166.82129568,  91.00741773,
+       174.75026808, 122.83488194,  63.27214662, 151.99895968,
+        53.73407848, 166.00134469,  42.65030679, 153.04135861,
+        80.54493791, 106.9048058 ,  79.94239571, 187.1634566 ,
+       192.60115666,  61.07125918, 107.40466928, 125.04038427,
+       207.72180472, 214.21749964, 123.47505642, 139.16396617,
+       168.21035724, 106.9267784 , 150.64502809, 157.92231541,
+       152.75856279, 116.22255529,  73.03090141, 155.66898717,
+       230.14278537, 143.50191007,  38.0947967 , 121.860737  ,
+       152.79569851, 207.99651918, 291.23082717, 189.17431487,
+       214.02871163, 235.18090808, 165.3872774 , 151.25000032,
+       156.57626783, 200.44154589, 219.35211772, 174.79049427,
+       169.23161767, 187.8719893 ,  57.49473392, 108.55110499,
+        92.68518048, 210.87365701, 245.47433558,  69.84529943,
+       113.0351432 ,  68.42945176, 141.69628649, 239.46177949,
+        58.3802079 , 235.47268158, 254.91986281, 253.31042713,
+       155.50813249, 230.55904185, 170.44063216, 117.99200943,
+       178.55548636, 240.07155813, 190.3398776 , 228.66100769,
+       114.24162642, 178.36570405, 209.09273631, 144.85567253,
+       200.65791056, 121.34184881, 150.50918174, 199.02165018,
+       146.2806806 , 124.02443772,  85.26036769, 235.16536625,
+        82.17255475, 231.29266191, 144.36634395, 197.04778326,
+       146.99720377,  77.18477545,  59.3728572 , 262.67891084,
+       225.12578458, 220.20506312,  46.59691745,  88.1040833 ,
+       221.77623752,  97.24900614, 164.48869956, 119.90114263,
+       157.79986195, 223.08505437,  99.5885471 , 165.84341641,
+       179.47571002,  89.83382843, 171.82492808, 158.36337775,
+       201.47857482, 186.39202728, 197.47094269,  66.57241937,
+       154.59826802, 116.18638034, 195.92074021, 128.04740268,
+        91.20285628, 140.56975398, 155.23013996, 169.70207476,
+        98.75498537, 190.1453107 , 142.5193942 , 177.26966106,
+        95.31403505,  69.0645889 , 164.16669511, 198.06460718,
+       178.26228169, 228.58801706, 160.67275473, 212.28682319,
+       222.48172067, 172.85184399, 125.27697688, 174.7240982 ,
+       152.38282657,  98.58485669,  99.73695497, 262.29658755,
+       223.73784832, 221.3425256 , 133.61497308, 145.42593933,
+        53.04259372, 141.81807792, 153.68369915, 125.21948824,
+        77.25091512, 230.26311068,  78.90849563, 105.20931175,
+       117.99633487,  99.06361032, 166.55382825, 159.34391027,
+       158.27612808, 143.05658763, 231.55938678, 176.64144413,
+       187.23572317,  65.38504165, 190.66078824, 179.74973878,
+       234.91022512, 119.15540438,  85.63464409, 100.85860205,
+       140.4174259 , 101.83836332, 120.66138775,  83.06599161,
+       234.58754656, 245.16192142, 263.26766492, 274.87431887,
+       180.67699732, 203.05474761, 254.21769367, 118.44122343,
+       268.44988948, 104.83643442, 115.87172349, 140.45788952,
+        58.46850453, 129.83264097, 263.78452618,  45.01240356,
+       123.28697604, 131.08314499,  34.89018315, 138.35659686,
+       244.30370588,  89.95612306, 192.07094588, 164.32674962,
+       147.74783541, 191.89381753, 176.44296313, 158.34707354,
+       189.19183226, 116.58275843, 111.44622859, 117.45262547,
+       165.79457547,  97.80241129, 139.54389024,  84.17453643,
+       159.9389204 , 202.4011919 ,  80.48200416, 146.64621068,
+        79.05274311, 191.33759392, 220.67545196, 203.75145711,
+        92.87093594, 179.15570241,  81.80126162, 152.82706623,
+        76.79700486,  97.79712384, 106.83424483, 123.83477117,
+       218.13375502, 126.02077447, 206.76300555, 230.57976636,
+       122.0628518 , 135.67694517, 126.36969016, 148.49621551,
+        88.07082258, 138.95595037, 203.86570118, 172.55362727,
+       122.95773416, 213.92445645, 174.88857841, 110.07169487,
+       198.36767241, 173.24601643, 162.64946177, 193.31777358,
+       191.53802295, 284.13478714, 279.30688474, 216.0070265 ,
+       210.08517801, 216.22213925, 157.01489819, 224.06561179,
+       189.05840605, 103.56829281, 178.70442926, 111.81492124,
+       290.99913121, 182.64959461,  79.33602602,  86.33287509,
+       249.15238929, 174.51439576, 122.10645431, 146.27099383,
+       170.6555544 , 183.50018707, 163.36970989, 157.03563376,
+       144.42617093, 125.30179325, 177.50072942, 104.57821235,
+       132.1746674 ,  95.06145678, 249.9007786 ,  86.24033937,
+        62.00077469, 156.81087903, 192.3231713 , 133.85292727,
+        93.67456315, 202.49458467,  52.53953733, 174.82926235,
+       196.9141296 , 118.06646574, 235.3011088 , 165.09286707,
+       160.41863314, 162.37831419, 254.05718804, 257.23616403,
+       197.50578991, 184.06609359,  58.62043851, 194.3950396 ,
+       110.77475548, 142.20916765, 128.82725506, 180.12844365,
+       211.26415225, 169.59711427, 164.34167693, 136.2363478 ,
+       174.50905908,  74.67649224, 246.29542114, 114.14131338,
+       111.54358708, 140.02313284, 109.99647408,  91.37269237,
+       163.01389345,  75.16389857, 254.05755095,  53.47055785,
+        98.48060512, 100.66268306, 258.58885744, 170.67482041,
+        61.91866052, 182.3042492 , 171.26913027, 189.19307553,
+       187.18384852,  87.12032949, 148.37816611, 251.35898288,
+       199.69712357, 283.63722409,  50.85577124, 172.14848891,
+       204.06179478, 174.16816194, 157.93027543, 150.50201654,
+       232.9761832 , 121.5808709 , 164.54891787, 172.67742636,
+       226.78005938, 149.46967223,  99.14026374,  80.43680779,
+       140.15557121, 191.90593837, 199.27952034, 153.63210613,
+       171.80130949, 112.11314588, 162.60650576, 129.8448476 ,
+       258.02898298, 100.70869427, 115.87611124, 122.53790409,
+       218.17749233,  60.94590955, 131.09513588, 119.48417359,
+        52.60848094, 193.01802803, 101.05169913, 121.22505534,
+       211.8588945 ,  53.44819015])
+>>> # Cant do the following
+>>> errors = preds != diabetes.target
+>>> errors = predicted != diabetes.target
+>>> errors
+array([ True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True])
+>>> errors.sum()
+442
+>>> # Regression
+>>> # MSE for regression is a common metric instead of "matching"
+>>> # we will cover more metrics later on... for now, consider MSE an evaluation metrics for regresssion
+>>> errors = (predicted - diabetes.target)
+>>> errors.shape
+(442,)
+>>> sq_errors = errors ** 2
+>>> sq_errors.mean()
+2859.6903987680657
+>>> np.mean(np.square(predicted - diabetes.target))
+2859.6903987680657
+>>> from sklearn.metrics import mean_squared_error
+>>> mean_squared_error(y_true=diabetes.target, y_pred=predicted)
+2859.6903987680657
+>>> model.score(diabetes.data, diabetes.target)
+0.5177494254132934
+>>> # We should always plot our prediction!!!
+>>> # Truth vs Pred (perfect prediction line on a 45 degree line)
+>>> %matplotlib qt
+>>> import matplotlib.pyplot as plt
+>>> plt.figure()
+<Figure size 1280x960 with 0 Axes>
+>>> # We have 10 features which means we are in multi-linear regression... hard to visualize... to will plot using 2d data
+>>> plt.plot(diabetes.target, predicted, 'o', label='target vs pred')
+[<matplotlib.lines.Line2D at 0x7faacb6c49e8>]
+>>> plt.plot(diabetes.target, diabetes.target, 'r--', label='perfect alignment')
+[<matplotlib.lines.Line2D at 0x7faaca67cfd0>]
+>>> plt.xlabel('truth')
+Text(0.5, 47.04444444444444, 'truth')
+>>> plt.ylabel('pred')
+Text(76.56944444444443, 0.5, 'pred')
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7faaca59f4e0>
+>>> plt.title('Truth vs Pred')
+Text(0.5, 1.0, 'Truth vs Pred')
+>>> plt.tight_layout()
+>>> # Better (perhaps)? is a residual plot
+>>> plt.figure()
+<Figure size 1280x960 with 0 Axes>
+>>> plt.plot(diabetes.target - predicted, 'o', label='targer - predicted')
+[<matplotlib.lines.Line2D at 0x7faacafa59e8>]
+>>> plt.plot(np.zeros(len(diabetes.target)), 'r--', label='prefect alignment')
+[<matplotlib.lines.Line2D at 0x7faacbc28be0>]
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7faacafa7f98>
+>>> plt.title('Residuals (truth - pred)')
+Text(0.5, 1.0, 'Residuals (truth - pred)')
+>>> plt.tight_layout()
+>>> # Helpful for paired preds
+>>> plt.figure()
+<Figure size 1280x960 with 0 Axes>
+>>> plt.plot(diabetes.data[:, 0], diabeters.target, 'C0o' label='Truth')
+>>> plt.plot(diabetes.data[:, 0], diabeters.target, 'C0o', label='Truth')
+>>> plt.plot(diabetes.data[:, 0], diabetes.target, 'C0o', label='Truth')
+[<matplotlib.lines.Line2D at 0x7faacbc76cc0>]
+>>> diabetes.feature_names[0]
+'age'
+>>> plt.plot(diabetes.data[:, 0], predicted, 'C1o', label='Pred')
+[<matplotlib.lines.Line2D at 0x7faacbc48390>]
+>>> plt.vlines(diabetes.data[:, 0], diabetes.target, predicted, color='k', linestyle='dashed')
+<matplotlib.collections.LineCollection at 0x7faacbc427f0>
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7faacbc8f470>
+>>> plt.xlabel(diabetes.feature_names[0])
+Text(0.5, 93.02444444444441, 'age')
+>>> plt.title('Truth <-----> Pred')
+Text(0.5, 1.0, 'Truth <-----> Pred')
+>>> plt.tight_layout()
+>>> plt.close('all')
+>>> clear
+>>> # slide 124
+>>> from sklearn import datasets
+>>> from sklearn.svm import SVR
+>>> diabetes = datasets.load_diabetes()
+>>> X = diabetes.data
+>>> t = diabetes.target
+>>> # we call X our feature matrix
+>>> model = SVR()
+>>> model.fit(X, t)
+SVR(C=1.0, cache_size=200, coef0=0.0, degree=3, epsilon=0.1, gamma='scale',
+    kernel='rbf', max_iter=-1, shrinking=True, tol=0.001, verbose=False)
+>>> preds = model.predict(X)
+>>> model.score(X, t)
+0.2071794500005485
+>>> preds
+array([154.5531456 , 113.21775309, 146.27274018, 144.16013091,
+       127.32161948, 127.58114822, 113.57752317, 142.59808544,
+       143.88472572, 150.42258654, 131.44245721, 136.97027959,
+       116.0956868 , 142.30709687, 118.39950823, 149.77317991,
+       149.27846365, 157.87403052, 133.00084272, 118.8966883 ,
+       124.08725923, 118.96148191, 124.24453057, 158.83731036,
+       136.82047338, 137.49134683, 128.96303508, 139.96466642,
+       129.09664955, 145.52308488, 133.14812814, 114.42896607,
+       155.8983734 , 124.91476497, 118.30881823, 128.0882515 ,
+       149.36151011, 130.48619725, 162.71674747, 134.189576  ,
+       152.19675021, 128.11242153, 133.91735304, 125.2921671 ,
+       160.26849179, 129.73634512, 129.14521405, 131.42086741,
+       119.17768714, 151.21347129, 135.56883276, 144.89804421,
+       131.27855754, 142.31990695, 128.9775181 , 111.88859622,
+       150.56524551, 123.42758846, 131.69696684, 142.54603867,
+       123.54298151, 145.73354088, 111.43909419, 127.17645287,
+       129.85909581, 154.21031425, 143.80174051, 131.55454746,
+       126.5099739 , 128.61140656, 116.19523766, 161.05769606,
+       144.1381705 , 137.1958609 , 142.97982362, 131.40766118,
+       143.81411271, 122.41097119, 140.65243887, 125.88175085,
+       146.12302378, 134.01265767, 116.15799408, 131.27162664,
+       122.98122021, 138.10515242, 122.48780113, 134.20466501,
+       122.34259306, 116.61011734, 114.73514628, 152.38201216,
+       143.89163541, 116.15213916, 121.93231474, 133.08578714,
+       164.06932324, 157.48583571, 123.43234759, 137.56639673,
+       143.54609063, 128.21559466, 133.60548551, 148.95669572,
+       133.49755275, 127.25997548, 123.83882666, 144.97044176,
+       159.18223696, 148.8814827 , 121.26162011, 119.8194373 ,
+       137.01199023, 165.1836956 , 167.16542371, 155.5962074 ,
+       166.1748422 , 157.49621051, 150.39038607, 132.49478419,
+       135.08311154, 159.60995619, 165.16031627, 144.4020501 ,
+       134.1859047 , 149.03167632, 120.87010844, 126.19993045,
+       116.58819741, 160.38705367, 158.34103171, 123.05479496,
+       132.19333975, 119.54069479, 128.62197467, 157.76218379,
+       121.44710763, 159.69568793, 163.27941498, 163.36660303,
+       144.79812961, 153.53591371, 152.74854458, 118.96688835,
+       155.50798719, 150.4110016 , 155.82751799, 158.38570485,
+       130.09556184, 144.62541947, 154.29720839, 123.74212446,
+       157.94596841, 135.59463345, 143.81795928, 159.08198691,
+       126.20340357, 137.08239805, 120.37938733, 162.17295013,
+       116.08413517, 152.63850833, 133.07737617, 156.97122722,
+       129.6870659 , 111.98786271, 125.53337274, 166.71844653,
+       159.34766942, 157.6627935 , 112.34560538, 125.22977887,
+       166.71117755, 123.9042754 , 140.28685152, 126.52488189,
+       147.03591568, 162.89227575, 117.35472348, 147.27507538,
+       149.91972048, 124.27608556, 154.4335665 , 148.08192784,
+       154.35367058, 146.22469181, 150.01799801, 125.39380872,
+       141.09999972, 122.86202517, 154.46235929, 131.05061586,
+       121.74258585, 146.84551553, 134.35325784, 155.47143567,
+       121.63252275, 159.09958975, 134.27086539, 147.2808104 ,
+       129.15412317, 113.30353054, 149.17858943, 163.28332804,
+       153.57858856, 154.78396997, 148.33516788, 154.91288661,
+       160.31651034, 147.23760256, 127.90209533, 142.70036008,
+       137.7220165 , 117.13508529, 120.30091712, 161.76003142,
+       160.12280378, 159.03233908, 136.74805621, 130.26156547,
+       117.69267403, 132.97273156, 136.28244986, 128.53506642,
+       122.10037158, 161.45532473, 118.75757888, 128.26461629,
+       124.48049091, 116.22076822, 146.87406821, 139.9996659 ,
+       152.50335938, 128.97222999, 163.62613732, 149.81169425,
+       154.0067529 , 116.67388256, 152.21473429, 147.61284194,
+       168.02262409, 134.76891235, 127.6490339 , 121.35194942,
+       130.42119819, 124.90000006, 132.69873256, 121.85271035,
+       152.77019785, 167.44498919, 166.15286126, 160.86205328,
+       148.94355687, 159.72276202, 166.03840151, 120.34273069,
+       153.13007205, 119.01187621, 143.72592344, 137.32418087,
+       122.23021499, 137.04921306, 164.10019971, 115.92756046,
+       133.52724192, 130.6126749 , 120.87585156, 142.76753293,
+       167.03890181, 122.82841245, 148.35048008, 145.08994229,
+       134.14229935, 159.41451483, 147.23584551, 144.13142523,
+       147.48183596, 122.33788964, 138.07433069, 123.19766785,
+       144.30905446, 127.72663681, 144.3936129 , 113.31470652,
+       140.48024814, 154.62033385, 123.64660791, 144.5493382 ,
+       128.58580358, 150.00797864, 166.60842987, 151.99723247,
+       115.84272956, 146.06588694, 122.86076321, 133.95628805,
+       117.69820303, 119.26333499, 128.8466926 , 128.86178801,
+       157.2161818 , 135.25015162, 160.83262806, 157.41171875,
+       145.17433734, 138.59304778, 127.11148343, 150.81957737,
+       120.3467074 , 144.49299672, 156.42290843, 149.23699882,
+       122.54840994, 164.93529448, 140.57790717, 119.43164825,
+       160.35811215, 152.81461454, 140.60965139, 144.81954661,
+       153.94938607, 157.07523347, 156.0901834 , 159.37790096,
+       158.41262706, 156.40562501, 147.24961551, 155.05855831,
+       144.7636326 , 122.15839049, 155.19560096, 133.37354571,
+       169.22930697, 156.04767836, 119.34874341, 111.3466514 ,
+       153.5342066 , 151.55101799, 130.30110408, 139.80965472,
+       141.52336967, 151.22797769, 149.82544101, 138.5676283 ,
+       141.34705224, 140.80145599, 152.59088268, 123.97494807,
+       121.61758721, 134.36548071, 158.40413672, 122.86967299,
+       123.77191093, 145.16568409, 156.69519162, 129.75667357,
+       119.08042106, 147.58373001, 111.95016556, 156.99881461,
+       154.22041418, 127.26105343, 161.55493061, 141.25513104,
+       149.20653082, 147.74063294, 159.52019589, 159.94431791,
+       159.76801433, 149.22211897, 111.80628327, 157.43845771,
+       120.87322674, 129.43940082, 132.36873275, 152.4341166 ,
+       151.61335679, 149.06891269, 145.72227037, 133.21649015,
+       141.03974362, 124.86560553, 158.07210062, 121.28165881,
+       137.1906231 , 132.49144954, 116.00703026, 130.89374271,
+       144.68624717, 118.35620594, 169.07193947, 116.24929283,
+       129.2267779 , 118.48407269, 160.53007187, 136.87404563,
+       119.6826996 , 145.04234441, 142.66312143, 158.88097135,
+       141.15608629, 118.86167031, 148.4022093 , 162.57756044,
+       147.19762898, 151.18288185, 125.75982882, 146.85959332,
+       155.74327912, 153.03267867, 147.24486802, 133.24321195,
+       159.7936143 , 122.38100319, 150.02383763, 150.4155485 ,
+       157.50979684, 135.97081374, 132.19898177, 117.84693267,
+       144.23272644, 162.39858062, 151.69650967, 147.91656788,
+       149.34818114, 131.51949141, 154.9430985 , 129.55852001,
+       163.9812308 , 120.5618068 , 134.09727812, 129.35673218,
+       160.5010928 , 117.14008858, 128.67619051, 125.30646015,
+       114.34003494, 157.786925  , 137.39555452, 131.91372576,
+       156.13583915, 130.63967895])
+>>> diabetes.target
+array([151.,  75., 141., 206., 135.,  97., 138.,  63., 110., 310., 101.,
+        69., 179., 185., 118., 171., 166., 144.,  97., 168.,  68.,  49.,
+        68., 245., 184., 202., 137.,  85., 131., 283., 129.,  59., 341.,
+        87.,  65., 102., 265., 276., 252.,  90., 100.,  55.,  61.,  92.,
+       259.,  53., 190., 142.,  75., 142., 155., 225.,  59., 104., 182.,
+       128.,  52.,  37., 170., 170.,  61., 144.,  52., 128.,  71., 163.,
+       150.,  97., 160., 178.,  48., 270., 202., 111.,  85.,  42., 170.,
+       200., 252., 113., 143.,  51.,  52., 210.,  65., 141.,  55., 134.,
+        42., 111.,  98., 164.,  48.,  96.,  90., 162., 150., 279.,  92.,
+        83., 128., 102., 302., 198.,  95.,  53., 134., 144., 232.,  81.,
+       104.,  59., 246., 297., 258., 229., 275., 281., 179., 200., 200.,
+       173., 180.,  84., 121., 161.,  99., 109., 115., 268., 274., 158.,
+       107.,  83., 103., 272.,  85., 280., 336., 281., 118., 317., 235.,
+        60., 174., 259., 178., 128.,  96., 126., 288.,  88., 292.,  71.,
+       197., 186.,  25.,  84.,  96., 195.,  53., 217., 172., 131., 214.,
+        59.,  70., 220., 268., 152.,  47.,  74., 295., 101., 151., 127.,
+       237., 225.,  81., 151., 107.,  64., 138., 185., 265., 101., 137.,
+       143., 141.,  79., 292., 178.,  91., 116.,  86., 122.,  72., 129.,
+       142.,  90., 158.,  39., 196., 222., 277.,  99., 196., 202., 155.,
+        77., 191.,  70.,  73.,  49.,  65., 263., 248., 296., 214., 185.,
+        78.,  93., 252., 150.,  77., 208.,  77., 108., 160.,  53., 220.,
+       154., 259.,  90., 246., 124.,  67.,  72., 257., 262., 275., 177.,
+        71.,  47., 187., 125.,  78.,  51., 258., 215., 303., 243.,  91.,
+       150., 310., 153., 346.,  63.,  89.,  50.,  39., 103., 308., 116.,
+       145.,  74.,  45., 115., 264.,  87., 202., 127., 182., 241.,  66.,
+        94., 283.,  64., 102., 200., 265.,  94., 230., 181., 156., 233.,
+        60., 219.,  80.,  68., 332., 248.,  84., 200.,  55.,  85.,  89.,
+        31., 129.,  83., 275.,  65., 198., 236., 253., 124.,  44., 172.,
+       114., 142., 109., 180., 144., 163., 147.,  97., 220., 190., 109.,
+       191., 122., 230., 242., 248., 249., 192., 131., 237.,  78., 135.,
+       244., 199., 270., 164.,  72.,  96., 306.,  91., 214.,  95., 216.,
+       263., 178., 113., 200., 139., 139.,  88., 148.,  88., 243.,  71.,
+        77., 109., 272.,  60.,  54., 221.,  90., 311., 281., 182., 321.,
+        58., 262., 206., 233., 242., 123., 167.,  63., 197.,  71., 168.,
+       140., 217., 121., 235., 245.,  40.,  52., 104., 132.,  88.,  69.,
+       219.,  72., 201., 110.,  51., 277.,  63., 118.,  69., 273., 258.,
+        43., 198., 242., 232., 175.,  93., 168., 275., 293., 281.,  72.,
+       140., 189., 181., 209., 136., 261., 113., 131., 174., 257.,  55.,
+        84.,  42., 146., 212., 233.,  91., 111., 152., 120.,  67., 310.,
+        94., 183.,  66., 173.,  72.,  49.,  64.,  48., 178., 104., 132.,
+       220.,  57.])
+>>> preds  != diabetes.target
+array([ True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True])
+>>> errors = preds  != diabetes.target
+>>> errors.sum()
+442
+>>> len(diabetes)
+6
+>>> len(X)
+442
+>>> errors = preds  != t
+>>> errors = (preds - t)
+>>> sq_errors = errors ** 2
+>>> sq_errors.mean()  # MSE
+4701.334605401931
+>>> np.mean(np.square(pred-t))
+>>> np.mean(np.square(preds-t))
+4701.334605401931
+>>> from sklearn.metrics import mean_squared_error
+>>> mean_squared_error(t, preds)
+4701.334605401931
+>>> clear
+>>> # Slide 136
+>>> from sklearn import datasets
+>>> from sklearn.model_selection import train_test_split
+>>> from sklearn.dummy import DummyRegressor
+>>> DummyRegressor?
+>>> from sklearn.linear_model import LinearRegression
+>>> from sklearn.metrics import mean_squared_error
+>>> boston = datasets.load_boston()
+>>> boston.data.shape
+(506, 13)
+>>> boston.target
+array([24. , 21.6, 34.7, 33.4, 36.2, 28.7, 22.9, 27.1, 16.5, 18.9, 15. ,
+       18.9, 21.7, 20.4, 18.2, 19.9, 23.1, 17.5, 20.2, 18.2, 13.6, 19.6,
+       15.2, 14.5, 15.6, 13.9, 16.6, 14.8, 18.4, 21. , 12.7, 14.5, 13.2,
+       13.1, 13.5, 18.9, 20. , 21. , 24.7, 30.8, 34.9, 26.6, 25.3, 24.7,
+       21.2, 19.3, 20. , 16.6, 14.4, 19.4, 19.7, 20.5, 25. , 23.4, 18.9,
+       35.4, 24.7, 31.6, 23.3, 19.6, 18.7, 16. , 22.2, 25. , 33. , 23.5,
+       19.4, 22. , 17.4, 20.9, 24.2, 21.7, 22.8, 23.4, 24.1, 21.4, 20. ,
+       20.8, 21.2, 20.3, 28. , 23.9, 24.8, 22.9, 23.9, 26.6, 22.5, 22.2,
+       23.6, 28.7, 22.6, 22. , 22.9, 25. , 20.6, 28.4, 21.4, 38.7, 43.8,
+       33.2, 27.5, 26.5, 18.6, 19.3, 20.1, 19.5, 19.5, 20.4, 19.8, 19.4,
+       21.7, 22.8, 18.8, 18.7, 18.5, 18.3, 21.2, 19.2, 20.4, 19.3, 22. ,
+       20.3, 20.5, 17.3, 18.8, 21.4, 15.7, 16.2, 18. , 14.3, 19.2, 19.6,
+       23. , 18.4, 15.6, 18.1, 17.4, 17.1, 13.3, 17.8, 14. , 14.4, 13.4,
+       15.6, 11.8, 13.8, 15.6, 14.6, 17.8, 15.4, 21.5, 19.6, 15.3, 19.4,
+       17. , 15.6, 13.1, 41.3, 24.3, 23.3, 27. , 50. , 50. , 50. , 22.7,
+       25. , 50. , 23.8, 23.8, 22.3, 17.4, 19.1, 23.1, 23.6, 22.6, 29.4,
+       23.2, 24.6, 29.9, 37.2, 39.8, 36.2, 37.9, 32.5, 26.4, 29.6, 50. ,
+       32. , 29.8, 34.9, 37. , 30.5, 36.4, 31.1, 29.1, 50. , 33.3, 30.3,
+       34.6, 34.9, 32.9, 24.1, 42.3, 48.5, 50. , 22.6, 24.4, 22.5, 24.4,
+       20. , 21.7, 19.3, 22.4, 28.1, 23.7, 25. , 23.3, 28.7, 21.5, 23. ,
+       26.7, 21.7, 27.5, 30.1, 44.8, 50. , 37.6, 31.6, 46.7, 31.5, 24.3,
+       31.7, 41.7, 48.3, 29. , 24. , 25.1, 31.5, 23.7, 23.3, 22. , 20.1,
+       22.2, 23.7, 17.6, 18.5, 24.3, 20.5, 24.5, 26.2, 24.4, 24.8, 29.6,
+       42.8, 21.9, 20.9, 44. , 50. , 36. , 30.1, 33.8, 43.1, 48.8, 31. ,
+       36.5, 22.8, 30.7, 50. , 43.5, 20.7, 21.1, 25.2, 24.4, 35.2, 32.4,
+       32. , 33.2, 33.1, 29.1, 35.1, 45.4, 35.4, 46. , 50. , 32.2, 22. ,
+       20.1, 23.2, 22.3, 24.8, 28.5, 37.3, 27.9, 23.9, 21.7, 28.6, 27.1,
+       20.3, 22.5, 29. , 24.8, 22. , 26.4, 33.1, 36.1, 28.4, 33.4, 28.2,
+       22.8, 20.3, 16.1, 22.1, 19.4, 21.6, 23.8, 16.2, 17.8, 19.8, 23.1,
+       21. , 23.8, 23.1, 20.4, 18.5, 25. , 24.6, 23. , 22.2, 19.3, 22.6,
+       19.8, 17.1, 19.4, 22.2, 20.7, 21.1, 19.5, 18.5, 20.6, 19. , 18.7,
+       32.7, 16.5, 23.9, 31.2, 17.5, 17.2, 23.1, 24.5, 26.6, 22.9, 24.1,
+       18.6, 30.1, 18.2, 20.6, 17.8, 21.7, 22.7, 22.6, 25. , 19.9, 20.8,
+       16.8, 21.9, 27.5, 21.9, 23.1, 50. , 50. , 50. , 50. , 50. , 13.8,
+       13.8, 15. , 13.9, 13.3, 13.1, 10.2, 10.4, 10.9, 11.3, 12.3,  8.8,
+        7.2, 10.5,  7.4, 10.2, 11.5, 15.1, 23.2,  9.7, 13.8, 12.7, 13.1,
+       12.5,  8.5,  5. ,  6.3,  5.6,  7.2, 12.1,  8.3,  8.5,  5. , 11.9,
+       27.9, 17.2, 27.5, 15. , 17.2, 17.9, 16.3,  7. ,  7.2,  7.5, 10.4,
+        8.8,  8.4, 16.7, 14.2, 20.8, 13.4, 11.7,  8.3, 10.2, 10.9, 11. ,
+        9.5, 14.5, 14.1, 16.1, 14.3, 11.7, 13.4,  9.6,  8.7,  8.4, 12.8,
+       10.5, 17.1, 18.4, 15.4, 10.8, 11.8, 14.9, 12.6, 14.1, 13. , 13.4,
+       15.2, 16.1, 17.8, 14.9, 14.1, 12.7, 13.5, 14.9, 20. , 16.4, 17.7,
+       19.5, 20.2, 21.4, 19.9, 19. , 19.1, 19.1, 20.1, 19.9, 19.6, 23.2,
+       29.8, 13.8, 13.3, 16.7, 12. , 14.6, 21.4, 23. , 23.7, 25. , 21.8,
+       20.6, 21.2, 19.1, 20.6, 15.2,  7. ,  8.1, 13.6, 20.1, 21.8, 24.5,
+       23.1, 19.7, 18.3, 21.2, 17.5, 16.8, 22.4, 20.6, 23.9, 22. , 11.9])
+>>> X_train, X_test, y_train, y_test = train_test_split(boston.data, boston.target, test_size=0.3, random_state=42)
+>>> X_train.shape
+(354, 13)
+>>> X_test.shape
+(152, 13)
+>>> y_train.shape
+(354,)
+>>> y_test.shape
+(152,)
+>>> dummy_baseline = DummyRegressor()
+>>> dummy_baseline.fit(X_train, y_train)
+DummyRegressor(constant=None, quantile=None, strategy='mean')
+>>> dummy_baseline.predict(X_train)
+array([23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921,
+       23.01581921, 23.01581921, 23.01581921, 23.01581921])
+>>> dummy_baseline.predict(X_train)[:5]
+array([23.01581921, 23.01581921, 23.01581921, 23.01581921, 23.01581921])
+>>> X_train.mean()
+70.18538399608866
+>>> y_train.mean()
+23.01581920903955
+>>> dummy_baseline.score(X_test, y_test)
+-0.03469753992352409
+>>> mean_squared_error(y_test, dummy_baseline.predict(X_test))
+77.09851667615845
+>>> dummy_baseline = DummyRegressor('median')
+>>> dummy_baseline.fit(X_train, y_train)
+DummyRegressor(constant=None, quantile=None, strategy='median')
+>>> dummy_baseline.predict(X_train)[:5]
+array([21.75, 21.75, 21.75, 21.75, 21.75])
+>>> np.medain(y_train)
+>>> np.median(y_train)
+21.75
+>>> mean_squared_error(y_test, dummy_baseline.predict(X_test))
+74.63013157894736
+>>> dummy_baseline.score(X_test, y_test)
+-0.0015706770761352296
+>>> baseline_model = LinearRegression()
+>>> baseline_model.fit(X_train, y_train)
+LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
+>>> baseline_model.score(X_test, y_test)
+0.711226005748496
+>>> mean_squared_error(y_test, baseline_model.predict(X_test))
+21.517444231176995
+>>> # Always use a dummy baseline and a "linear" baseline
+>>> # DummyClassifier and LogistiRegression for classifictaion problems
+>>> # DummyRegressor and LinearRegression for regression problems
+>>> # demo/ml_sklearn/concrete/Concrete_Regression_Baseline.ipynb
+>>> %ls
+>>> %history -pof day2_PM.txt

@@ -1,0 +1,341 @@
+>>> # MLW 2022-05-11 Day 3 AM
+>>> # Slide 138
+>>> 
+... import numpy as np
+... import seaborn as sns
+... import matplotlib.pyplot as plt
+... from scipy.stats import norm
+... 
+... x1 = np.linspace(10, 20, 50)
+... x2 = np.linspace(20, 40, 50)
+... x3 = np.linspace(40, 100, 15)
+... 
+... x = np.concatenate([x1, x2, x3])
+... 
+... # Transform
+... x_trans = np.log(x + 0.01)
+... 
+... # Plot
+... fig = plt.figure(figsize=(10, 8))
+... plt.subplot(2, 3, 1)
+... plt.hist(x)
+... plt.title("Hist")
+... 
+... plt.subplot(2, 3, 2)
+... sns.kdeplot(x)
+... plt.title("KDE")
+... 
+... plt.subplot(2, 3, 3)
+... sns.distplot(x, fit=norm, fit_kws={"color": "red"})
+... plt.title("Dist")
+... 
+... plt.subplot(2, 3, 4)
+... plt.hist(x_trans)
+... plt.title("Trans Hist")
+... 
+... plt.subplot(2, 3, 5)
+... sns.kdeplot(x_trans)
+... plt.title("Trans KDE")
+... 
+... plt.subplot(2, 3, 6)
+... sns.distplot(x_trans, fit=norm, fit_kws={"color": "red"})
+... plt.title("Trans Dist")
+... fig.suptitle("log(x + 0.01)")
+... plt.tight_layout()
+...
+>>> %matplotlib qt
+>>> 
+... import numpy as np
+... import seaborn as sns
+... import matplotlib.pyplot as plt
+... from scipy.stats import norm
+... 
+... x1 = np.linspace(10, 20, 50)
+... x2 = np.linspace(20, 40, 50)
+... x3 = np.linspace(40, 100, 15)
+... 
+... x = np.concatenate([x1, x2, x3])
+... 
+... # Transform
+... x_trans = np.log(x + 0.01)
+... 
+... # Plot
+... fig = plt.figure(figsize=(10, 8))
+... plt.subplot(2, 3, 1)
+... plt.hist(x)
+... plt.title("Hist")
+... 
+... plt.subplot(2, 3, 2)
+... sns.kdeplot(x)
+... plt.title("KDE")
+... 
+... plt.subplot(2, 3, 3)
+... sns.distplot(x, fit=norm, fit_kws={"color": "red"})
+... plt.title("Dist")
+... 
+... plt.subplot(2, 3, 4)
+... plt.hist(x_trans)
+... plt.title("Trans Hist")
+... 
+... plt.subplot(2, 3, 5)
+... sns.kdeplot(x_trans)
+... plt.title("Trans KDE")
+... 
+... plt.subplot(2, 3, 6)
+... sns.distplot(x_trans, fit=norm, fit_kws={"color": "red"})
+... plt.title("Trans Dist")
+... fig.suptitle("log(x + 0.01)")
+... plt.tight_layout()
+...
+>>> # if we have a feature (f1) that needs some non-linear transform, log(f1 + 0.01) called f1_log, we will replace f1 in the feature set
+>>> # with fl_log
+>>> 
+... import numpy as np
+... import seaborn as sns
+... import matplotlib.pyplot as plt
+... from scipy.stats import norm
+... 
+... x1 = np.linspace(10, 20, 50)
+... x2 = np.linspace(20, 40, 50)
+... x3 = np.linspace(40, 100, 15)
+... 
+... x = np.concatenate([x1, x2, x3])
+... 
+... # Transform
+... x_trans = np.log(x + 0.01)
+... 
+... # Plot
+... fig = plt.figure(figsize=(10, 8))
+... plt.subplot(2, 3, 1)
+... plt.hist(x)
+... plt.title("Hist")
+... 
+... plt.subplot(2, 3, 2)
+... sns.kdeplot(x)
+... plt.title("KDE")
+... 
+... plt.subplot(2, 3, 3)
+... sns.distplot(x, fit=norm, fit_kws={"color": "red"})
+... plt.title("Dist")
+... 
+... plt.subplot(2, 3, 4)
+... plt.hist(x_trans)
+... plt.title("Trans Hist")
+... 
+... plt.subplot(2, 3, 5)
+... sns.kdeplot(x_trans)
+... plt.title("Trans KDE")
+... 
+... plt.subplot(2, 3, 6)
+... sns.distplot(x_trans, fit=norm, fit_kws={"color": "red"})
+... plt.title("Trans Dist")
+... fig.suptitle("log(x + 0.01)")
+... plt.tight_layout()
+...
+>>> clear
+>>> # slide 148
+>>> import matplotlib.pyplot as plt
+>>> import numpy as np
+>>> import scipy.stats as stats
+>>> import seaborn as sns
+>>> a = stats.norm(1, 5).rvs(100) + np.random.random(100)
+>>> b = np.exp(a)
+>>> # histogram
+>>> fig, ax = plt.subplot(2, 1)
+>>> fig, ax = plt.subplots(2, 1)
+>>> ax[0].hist(a)
+(array([ 1.,  5.,  4., 17., 11., 26., 19.,  9.,  5.,  3.]),
+ array([-12.49875344,  -9.82893769,  -7.15912193,  -4.48930618,
+         -1.81949042,   0.85032534,   3.52014109,   6.18995685,
+          8.8597726 ,  11.52958836,  14.19940411]),
+ <BarContainer object of 10 artists>)
+>>> ax[1].hist(b)
+(array([98.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.]),
+ array([3.73130155e-06, 1.46798917e+05, 2.93597835e+05, 4.40396752e+05,
+        5.87195670e+05, 7.33994587e+05, 8.80793505e+05, 1.02759242e+06,
+        1.17439134e+06, 1.32119026e+06, 1.46798917e+06]),
+ <BarContainer object of 10 artists>)
+>>> plt.figure()
+<Figure size 1280x960 with 0 Axes>
+>>> fig, ax = plt.subplots(2, 1)
+>>> sns.kdeplot(a, ax=ax[0])
+<AxesSubplot:ylabel='Density'>
+>>> sns.kdeplot(b, ax=ax[1])
+<AxesSubplot:ylabel='Density'>
+>>> # Get b back to a, use the natural log ln which is the inverse of exp
+>>> np.log(b)
+array([  0.71736403,   8.2797881 ,  -4.41921749,  10.61261018,
+         3.24548336,   3.58827794,   3.3814685 ,   2.5445261 ,
+        -7.10329062,   2.34946871,   5.2279361 ,   0.93645866,
+        -3.4353234 ,   4.9812683 ,   2.04094884,   5.77668136,
+         4.70216072,   9.75954198,   6.07780864,   0.89045564,
+         3.37404096,  -7.38379085,   2.81058431,   8.70965668,
+         2.72760685,   3.80880961,  -7.67340415,   9.63286098,
+        -0.21715581,  -2.56176313,  -4.16550611,   6.10860322,
+         2.80820819,   4.95866655,  11.54173815,  -0.92793784,
+        -0.34291913,   6.93436809,  -2.61008314,  -3.59885079,
+         4.32520044,   1.02534963,   0.45005072,  -6.06194142,
+         4.84149125,  -9.14610753,  -4.14987046,   2.4045267 ,
+         2.90186721,   4.88240876,   8.13980951, -12.49875344,
+        -0.52875691,  -7.23819483,  -3.31023313,   2.80329332,
+        10.55324109,  -2.74988591,  -5.02559515,  -1.22352286,
+         4.68829022,   2.83823268,  -0.74415682,   3.93506627,
+         6.57171151,   2.67322989,   2.20569867,   3.06389291,
+        -3.49062769,  -1.84983435,  -2.19487086,   1.14400162,
+         3.90870695,   5.23121989,  -2.03410239,  -2.24461233,
+         0.57657901,   6.58605202,   1.19985938,   5.55995762,
+         3.21343617,  12.06074817,  14.19940411,   1.87819729,
+         8.16288545,   3.98013516,  -2.95590593,  -7.34988516,
+         3.44825814,  -1.12380623,   6.67070693,  -0.80132922,
+        -7.10292644,   6.64142033,   4.1031622 ,   8.96173557,
+        -1.98920359,   1.1337247 ,   2.03010444,  -2.80087076])
+>>> a
+array([  0.71736403,   8.2797881 ,  -4.41921749,  10.61261018,
+         3.24548336,   3.58827794,   3.3814685 ,   2.5445261 ,
+        -7.10329062,   2.34946871,   5.2279361 ,   0.93645866,
+        -3.4353234 ,   4.9812683 ,   2.04094884,   5.77668136,
+         4.70216072,   9.75954198,   6.07780864,   0.89045564,
+         3.37404096,  -7.38379085,   2.81058431,   8.70965668,
+         2.72760685,   3.80880961,  -7.67340415,   9.63286098,
+        -0.21715581,  -2.56176313,  -4.16550611,   6.10860322,
+         2.80820819,   4.95866655,  11.54173815,  -0.92793784,
+        -0.34291913,   6.93436809,  -2.61008314,  -3.59885079,
+         4.32520044,   1.02534963,   0.45005072,  -6.06194142,
+         4.84149125,  -9.14610753,  -4.14987046,   2.4045267 ,
+         2.90186721,   4.88240876,   8.13980951, -12.49875344,
+        -0.52875691,  -7.23819483,  -3.31023313,   2.80329332,
+        10.55324109,  -2.74988591,  -5.02559515,  -1.22352286,
+         4.68829022,   2.83823268,  -0.74415682,   3.93506627,
+         6.57171151,   2.67322989,   2.20569867,   3.06389291,
+        -3.49062769,  -1.84983435,  -2.19487086,   1.14400162,
+         3.90870695,   5.23121989,  -2.03410239,  -2.24461233,
+         0.57657901,   6.58605202,   1.19985938,   5.55995762,
+         3.21343617,  12.06074817,  14.19940411,   1.87819729,
+         8.16288545,   3.98013516,  -2.95590593,  -7.34988516,
+         3.44825814,  -1.12380623,   6.67070693,  -0.80132922,
+        -7.10292644,   6.64142033,   4.1031622 ,   8.96173557,
+        -1.98920359,   1.1337247 ,   2.03010444,  -2.80087076])
+>>> fig, ax = plt.subplots(2, 1)
+>>> sns.kdeplot(a, ax=ax[0])
+<AxesSubplot:ylabel='Density'>
+>>> sns.kdeplot(np.log(b), ax=ax[1])
+<AxesSubplot:ylabel='Density'>
+>>> sns.kdeplot(stats.norm, ax=ax[1])
+>>> stats.norm
+<scipy.stats._continuous_distns.norm_gen at 0x7f9cc532d400>
+>>> stats.norm?
+>>> stats.norm(len(a))
+<scipy.stats._distn_infrastructure.rv_frozen at 0x7f9ccc66df60>
+>>> fig, ax = plt.subplots(2, 1)
+>>> sns.kdeplot(a, ax=ax[0])
+<AxesSubplot:ylabel='Density'>
+>>> sns.distplot(a=np.log(b), fit=stats.norm)
+<AxesSubplot:ylabel='Density'>
+>>> # we can use statsmodels for qqplot and variance inflation factor
+>>> # slide 151 example
+>>> 
+... import numpy as np
+... import seaborn as sns
+... 
+... # Third-party libraries
+... import matplotlib.pyplot as plt
+... 
+... # ----- Original Data / Plot ----- #
+... # loglinear plot for numeric_features.pptx
+... sns.set_style("white")
+... current_palette = sns.color_palette()
+... half_slide_dot = 25
+... scatter_options = {"edgecolor": "#8E8E8E", "linewidth": 0.75}
+... n = 1000
+... 
+... np.random.seed(7)
+... x = np.random.normal(0, 1, n)
+... y = 1 + x
+... x = 10 ** x
+... y = 10 ** y
+... x = x + x * np.random.normal(0, 0.1, n)
+... y = y + y * np.random.normal(0, 0.1, n)
+... 
+... fig, ax = plt.subplots(2, 2, figsize=(10, 8))
+... 
+... ax[0, 0].scatter(x=x, y=y, c="C0", s=half_slide_dot, **scatter_options)
+... ax[0, 1].scatter(
+...     x=np.log10(x), y=np.log10(y), c="C2", s=half_slide_dot, **scatter_options
+... )
+... 
+... sns.kdeplot(x=x, y=y, ax=ax[1, 0])
+... sns.kdeplot(x=np.log10(x), y=np.log10(y), color="C2", ax=ax[1, 1])
+... 
+... ax[0, 0].set_title("Log-linear data")
+... ax[1, 0].set_title("After log transform (np.log10)")
+... 
+... ax[0, 0].set_xlim(0, 150)
+... ax[0, 0].set_ylim(0, 2000)
+... 
+... ax[1, 0].set_xlim(0, 150)
+... ax[1, 0].set_ylim(0, 2000)
+... 
+... ax[0, 0].set_xticks([])
+... ax[0, 1].set_xticks([])
+... ax[1, 0].set_xticks([])
+... ax[1, 1].set_xticks([])
+... 
+... ax[0, 0].set_yticks([])
+... ax[0, 1].set_yticks([])
+... ax[1, 0].set_yticks([])
+... ax[1, 1].set_yticks([])
+... 
+... fig.tight_layout()
+...
+>>> # oops that was for slide147
+>>> 
+... # Third-party libraries
+... import matplotlib.pyplot as plt
+... import numpy as np
+... import seaborn as sns
+... 
+... # Feature 1
+... x1 = np.linspace(-5, 10, 100)
+... x2 = np.linspace(-2, 5, 200)
+... x = np.concatenate([x1, x2])
+... 
+... # Target
+... y = x ** 2 + np.random.normal(loc=0, scale=5, size=len(x))
+... 
+... # Linearize through polynomial expansion term
+... new_feature = x ** 2
+... 
+... plt.figure(figsize=(8, 12))
+... plt.subplot(2, 1, 1)
+... plt.scatter(x, y, color="C0")
+... plt.title("Curvilinear Data")
+... plt.ylabel("target")
+... plt.xlabel("feature 1")
+... 
+... plt.subplot(2, 1, 2)
+... plt.scatter(new_feature, y, color="C1")
+... plt.title("Polynomial Transform ($x^2$)")
+... plt.ylabel("target")
+... plt.xlabel("new feature ($x^2$)")
+... 
+... # Seaborn plots
+... # Show with and without lowess (localized regression)
+... plt.figure(figsize=(8, 12))
+... plt.subplot(2, 1, 1)
+... sns.regplot(x=x, y=y, color="C0", lowess=False)
+... # sns.regplot(x=x, y=y, color="C0", lowess=True)
+... plt.title("Curvilinear Data")
+... plt.ylabel("target")
+... plt.xlabel("feature 1")
+... 
+... plt.subplot(2, 1, 2)
+... sns.regplot(x=new_feature, y=y, color="C1", lowess=False)
+... # sns.regplot(x=new_feature, y=y, color="C0", lowess=True)
+... plt.title("Polynomial Transform ($x^2$)")
+... plt.ylabel("target")
+... plt.xlabel("new feature ($x^2$)")
+...
+Text(0.5, 0, 'new feature ($x^2$)')
+>>> # feature engineering should always be applied AFTER scaling
+>>> ls
+>>> %history -pof day3_AM.txt

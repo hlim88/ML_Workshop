@@ -1,0 +1,582 @@
+>>> # MLW 2022-05-11 Day 3 PM
+>>> # Slide 161 pipelines
+>>> # Why do we need them?
+>>> from sklearn import datasets
+>>> from sklearn.model_selection import train_test_split
+>>> from sklearn.preprocessing import StandardScaler
+>>> from sklearn.svm import SVC
+>>> iris = datasets.load_iris()
+>>> X_train, X_test, t_train, t_test = train_test_split(iris.data, iris.target, test_size=0.3, stratify=iris.target, random_state=42)
+>>> # Instantiate scaler
+>>> scaler = StandardScaler()
+>>> # Fit and transform in one step (could do a .fit() then a .transform())
+>>> # scaler.fit(iris.data)
+>>> # new_train = scaler.transform(iris.data)
+>>> new_train = scaler.fit_transform(X_train)
+>>> new_train.mean(axis=0)
+array([ 2.38327876e-15, -1.12145742e-15, -1.37456184e-16, -6.97854473e-17])
+>>> new_train.std(axis=0)
+array([1., 1., 1., 1.])
+>>> model = SVC()
+>>> model.fit(X_train, y_train)
+>>> model.fit(X_train, t_train)
+SVC(C=1.0, break_ties=False, cache_size=200, class_weight=None, coef0=0.0,
+    decision_function_shape='ovr', degree=3, gamma='scale', kernel='rbf',
+    max_iter=-1, probability=False, random_state=None, shrinking=True,
+    tol=0.001, verbose=False)
+>>> model.score(X_train, t_train)
+0.9714285714285714
+>>> model.predict(X_train)
+array([1, 1, 0, 2, 1, 2, 0, 0, 0, 2, 2, 0, 0, 1, 1, 2, 0, 0, 2, 2, 0, 2,
+       2, 2, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 2, 2, 0, 2, 0, 1, 0,
+       2, 1, 0, 2, 1, 2, 1, 0, 1, 2, 1, 2, 0, 1, 0, 1, 1, 1, 2, 2, 1, 2,
+       2, 0, 2, 1, 1, 2, 0, 2, 2, 1, 0, 2, 2, 0, 0, 2, 2, 2, 0, 2, 1, 2,
+       2, 0, 1, 1, 1, 1, 1, 0, 2, 1, 2, 0, 0, 1, 0, 1, 0])
+>>> model.score(X_test, t_test)
+0.9555555555555556
+>>> model.predict(X_test)
+array([2, 1, 2, 1, 2, 2, 1, 1, 0, 2, 0, 0, 2, 2, 0, 2, 1, 0, 0, 0, 1, 0,
+       1, 2, 2, 1, 1, 1, 1, 0, 2, 2, 1, 0, 2, 0, 0, 0, 0, 2, 1, 0, 1, 2,
+       1])
+>>> model.fit(new_train, t_train)
+SVC(C=1.0, break_ties=False, cache_size=200, class_weight=None, coef0=0.0,
+    decision_function_shape='ovr', degree=3, gamma='scale', kernel='rbf',
+    max_iter=-1, probability=False, random_state=None, shrinking=True,
+    tol=0.001, verbose=False)
+>>> model.score(new_train, t_train)
+0.9714285714285714
+>>> model.predict(new_train)
+array([1, 1, 0, 2, 1, 2, 0, 0, 0, 2, 2, 0, 0, 1, 1, 2, 0, 0, 2, 2, 0, 2,
+       2, 2, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 2, 2, 0, 2, 0, 1, 0,
+       2, 1, 0, 2, 1, 2, 1, 0, 1, 2, 1, 2, 0, 1, 0, 1, 1, 1, 2, 2, 1, 2,
+       2, 0, 2, 1, 1, 2, 0, 2, 2, 1, 0, 2, 2, 0, 0, 2, 2, 2, 0, 2, 1, 2,
+       2, 0, 1, 1, 1, 1, 1, 0, 2, 1, 2, 0, 0, 1, 0, 1, 0])
+>>> model.score(X_test, t_test)
+0.3333333333333333
+>>> model.predict(X_test)
+array([2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2])
+>>> # I forgot to .... scale my TEST data!!!!
+>>> new_test = scaler.transform(X_test)
+>>> model.score(new_test, t_test)
+0.9333333333333333
+>>> # Pipelines are awesome because I don't have to remember to scale my test data
+>>> # Pipeple know that whatever is LEARNED from train (via .fit()) is applied to the data when calling .predict()
+>>> from sklearn.pipeline import Pipeline
+>>> pipe = Pipeline([
+...     ('scaler', StandardScaler()),
+...     ('clf', SVC()),
+... ])
+...
+>>> pipe
+Pipeline(memory=None,
+         steps=[('scaler',
+                 StandardScaler(copy=True, with_mean=True, with_std=True)),
+                ('clf',
+                 SVC(C=1.0, break_ties=False, cache_size=200, class_weight=None,
+                     coef0=0.0, decision_function_shape='ovr', degree=3,
+                     gamma='scale', kernel='rbf', max_iter=-1,
+                     probability=False, random_state=None, shrinking=True,
+                     tol=0.001, verbose=False))],
+         verbose=False)
+>>> pipe.fit(X_train, t_train)
+Pipeline(memory=None,
+         steps=[('scaler',
+                 StandardScaler(copy=True, with_mean=True, with_std=True)),
+                ('clf',
+                 SVC(C=1.0, break_ties=False, cache_size=200, class_weight=None,
+                     coef0=0.0, decision_function_shape='ovr', degree=3,
+                     gamma='scale', kernel='rbf', max_iter=-1,
+                     probability=False, random_state=None, shrinking=True,
+                     tol=0.001, verbose=False))],
+         verbose=False)
+>>> pipe.predict(X_test)
+array([2, 1, 1, 1, 2, 2, 1, 1, 0, 2, 0, 0, 2, 2, 0, 2, 1, 0, 0, 0, 1, 0,
+       1, 2, 2, 1, 1, 1, 1, 0, 2, 2, 1, 0, 2, 0, 0, 0, 0, 2, 1, 0, 1, 2,
+       1])
+>>> pipe.score(X_test, t_test)
+0.9333333333333333
+>>> pipe.score(X_train, t_train)
+0.9714285714285714
+>>> # I can stack as many transformers as I want, the only condition is that the LAST thing must be an estimator (has to have a .predcit() method)
+>>> clear
+>>> # slide 163
+>>> pipe
+Pipeline(memory=None,
+         steps=[('scaler',
+                 StandardScaler(copy=True, with_mean=True, with_std=True)),
+                ('clf',
+                 SVC(C=1.0, break_ties=False, cache_size=200, class_weight=None,
+                     coef0=0.0, decision_function_shape='ovr', degree=3,
+                     gamma='scale', kernel='rbf', max_iter=-1,
+                     probability=False, random_state=None, shrinking=True,
+                     tol=0.001, verbose=False))],
+         verbose=False)
+>>> pipe.steps
+[('scaler', StandardScaler(copy=True, with_mean=True, with_std=True)),
+ ('clf',
+  SVC(C=1.0, break_ties=False, cache_size=200, class_weight=None, coef0=0.0,
+      decision_function_shape='ovr', degree=3, gamma='scale', kernel='rbf',
+      max_iter=-1, probability=False, random_state=None, shrinking=True,
+      tol=0.001, verbose=False))]
+>>> pipe.named_steps
+{'scaler': StandardScaler(copy=True, with_mean=True, with_std=True),
+ 'clf': SVC(C=1.0, break_ties=False, cache_size=200, class_weight=None, coef0=0.0,
+     decision_function_shape='ovr', degree=3, gamma='scale', kernel='rbf',
+     max_iter=-1, probability=False, random_state=None, shrinking=True,
+     tol=0.001, verbose=False)}
+>>> pipe.get_params()
+{'memory': None,
+ 'steps': [('scaler',
+   StandardScaler(copy=True, with_mean=True, with_std=True)),
+  ('clf',
+   SVC(C=1.0, break_ties=False, cache_size=200, class_weight=None, coef0=0.0,
+       decision_function_shape='ovr', degree=3, gamma='scale', kernel='rbf',
+       max_iter=-1, probability=False, random_state=None, shrinking=True,
+       tol=0.001, verbose=False))],
+ 'verbose': False,
+ 'scaler': StandardScaler(copy=True, with_mean=True, with_std=True),
+ 'clf': SVC(C=1.0, break_ties=False, cache_size=200, class_weight=None, coef0=0.0,
+     decision_function_shape='ovr', degree=3, gamma='scale', kernel='rbf',
+     max_iter=-1, probability=False, random_state=None, shrinking=True,
+     tol=0.001, verbose=False),
+ 'scaler__copy': True,
+ 'scaler__with_mean': True,
+ 'scaler__with_std': True,
+ 'clf__C': 1.0,
+ 'clf__break_ties': False,
+ 'clf__cache_size': 200,
+ 'clf__class_weight': None,
+ 'clf__coef0': 0.0,
+ 'clf__decision_function_shape': 'ovr',
+ 'clf__degree': 3,
+ 'clf__gamma': 'scale',
+ 'clf__kernel': 'rbf',
+ 'clf__max_iter': -1,
+ 'clf__probability': False,
+ 'clf__random_state': None,
+ 'clf__shrinking': True,
+ 'clf__tol': 0.001,
+ 'clf__verbose': False}
+>>> pipe
+Pipeline(memory=None,
+         steps=[('scaler',
+                 StandardScaler(copy=True, with_mean=True, with_std=True)),
+                ('clf',
+                 SVC(C=1.0, break_ties=False, cache_size=200, class_weight=None,
+                     coef0=0.0, decision_function_shape='ovr', degree=3,
+                     gamma='scale', kernel='rbf', max_iter=-1,
+                     probability=False, random_state=None, shrinking=True,
+                     tol=0.001, verbose=False))],
+         verbose=False)
+>>> pipe = Pipeline([
+...     ('scaler', StandardScaler()),
+...     ('clf', SVC(C=0.5)),
+... ])
+...
+>>> pipe
+Pipeline(memory=None,
+         steps=[('scaler',
+                 StandardScaler(copy=True, with_mean=True, with_std=True)),
+                ('clf',
+                 SVC(C=0.5, break_ties=False, cache_size=200, class_weight=None,
+                     coef0=0.0, decision_function_shape='ovr', degree=3,
+                     gamma='scale', kernel='rbf', max_iter=-1,
+                     probability=False, random_state=None, shrinking=True,
+                     tol=0.001, verbose=False))],
+         verbose=False)
+>>> pipe.set_params(clf__C=0.75)
+Pipeline(memory=None,
+         steps=[('scaler',
+                 StandardScaler(copy=True, with_mean=True, with_std=True)),
+                ('clf',
+                 SVC(C=0.75, break_ties=False, cache_size=200,
+                     class_weight=None, coef0=0.0,
+                     decision_function_shape='ovr', degree=3, gamma='scale',
+                     kernel='rbf', max_iter=-1, probability=False,
+                     random_state=None, shrinking=True, tol=0.001,
+                     verbose=False))],
+         verbose=False)
+>>> pipe
+Pipeline(memory=None,
+         steps=[('scaler',
+                 StandardScaler(copy=True, with_mean=True, with_std=True)),
+                ('clf',
+                 SVC(C=0.75, break_ties=False, cache_size=200,
+                     class_weight=None, coef0=0.0,
+                     decision_function_shape='ovr', degree=3, gamma='scale',
+                     kernel='rbf', max_iter=-1, probability=False,
+                     random_state=None, shrinking=True, tol=0.001,
+                     verbose=False))],
+         verbose=False)
+>>> pipe.score(X_test, t_test)
+>>> pipe.fit(X_train, t_train)
+Pipeline(memory=None,
+         steps=[('scaler',
+                 StandardScaler(copy=True, with_mean=True, with_std=True)),
+                ('clf',
+                 SVC(C=0.75, break_ties=False, cache_size=200,
+                     class_weight=None, coef0=0.0,
+                     decision_function_shape='ovr', degree=3, gamma='scale',
+                     kernel='rbf', max_iter=-1, probability=False,
+                     random_state=None, shrinking=True, tol=0.001,
+                     verbose=False))],
+         verbose=False)
+>>> pipe.score(X_test, t_test)
+0.9333333333333333
+>>> pipe.predict(X_test)
+array([2, 1, 1, 1, 2, 2, 1, 1, 0, 2, 0, 0, 2, 2, 0, 2, 1, 0, 0, 0, 1, 0,
+       1, 2, 2, 1, 1, 1, 1, 0, 1, 2, 1, 0, 2, 0, 0, 0, 0, 2, 1, 0, 2, 2,
+       1])
+>>> pipe[0]
+StandardScaler(copy=True, with_mean=True, with_std=True)
+>>> pipe['scaler']
+StandardScaler(copy=True, with_mean=True, with_std=True)
+>>> pipe['scaler'].mean_
+array([5.87333333, 3.0552381 , 3.7847619 , 1.20571429])
+>>> pipe['clf'].coef_
+>>> SVC?
+>>> pipe['clf'].support_
+array([ 8, 12, 20, 25, 30, 51, 72, 80,  0,  1, 13, 19, 28, 33, 36, 54, 59,
+       60, 61, 63, 69, 75, 86, 92, 93, 94, 10, 15, 21, 37, 38, 42, 49, 53,
+       55, 65, 66, 71, 74, 81, 82, 85, 88, 98], dtype=int32)
+>>> clear
+>>> # Slide 164
+>>> from sklearn.linear_model import LogisticRegression
+>>> from sklearn.preprocessing import StandardScaler
+>>> from sklearn.pipeline import Pipeline
+>>> pipe = Pipeline([
+...     ('scaler', StandardScaler()),
+...     ('clf', LogisticRegression())
+... ])
+...
+>>> pipe = Pipeline([
+...     ('scaler', StandardScaler()),
+...     ('clf', LogisticRegression(penalty='l1', solver='liblinear'))
+... ])
+...
+>>> pipe
+Pipeline(memory=None,
+         steps=[('scaler',
+                 StandardScaler(copy=True, with_mean=True, with_std=True)),
+                ('clf',
+                 LogisticRegression(C=1.0, class_weight=None, dual=False,
+                                    fit_intercept=True, intercept_scaling=1,
+                                    l1_ratio=None, max_iter=100,
+                                    multi_class='auto', n_jobs=None,
+                                    penalty='l1', random_state=None,
+                                    solver='liblinear', tol=0.0001, verbose=0,
+                                    warm_start=False))],
+         verbose=False)
+>>> pipe = Pipeline([
+...     ('scaler', StandardScaler()),
+...     ('clf', LogisticRegression())
+... ])
+...
+>>> pipe.set_params(clf__penalty='l1', clf__solver='liblinear')
+Pipeline(memory=None,
+         steps=[('scaler',
+                 StandardScaler(copy=True, with_mean=True, with_std=True)),
+                ('clf',
+                 LogisticRegression(C=1.0, class_weight=None, dual=False,
+                                    fit_intercept=True, intercept_scaling=1,
+                                    l1_ratio=None, max_iter=100,
+                                    multi_class='auto', n_jobs=None,
+                                    penalty='l1', random_state=None,
+                                    solver='liblinear', tol=0.0001, verbose=0,
+                                    warm_start=False))],
+         verbose=False)
+>>> pipe
+Pipeline(memory=None,
+         steps=[('scaler',
+                 StandardScaler(copy=True, with_mean=True, with_std=True)),
+                ('clf',
+                 LogisticRegression(C=1.0, class_weight=None, dual=False,
+                                    fit_intercept=True, intercept_scaling=1,
+                                    l1_ratio=None, max_iter=100,
+                                    multi_class='auto', n_jobs=None,
+                                    penalty='l1', random_state=None,
+                                    solver='liblinear', tol=0.0001, verbose=0,
+                                    warm_start=False))],
+         verbose=False)
+>>> pipe.predict(iris.data)
+>>> pipe.fit(iris.data)
+>>> from sklearn import datasets
+>>> diabetes = datasets.load_diabetes()
+>>> pipe.fit(diabetes.data, diabetes.target)
+Pipeline(memory=None,
+         steps=[('scaler',
+                 StandardScaler(copy=True, with_mean=True, with_std=True)),
+                ('clf',
+                 LogisticRegression(C=1.0, class_weight=None, dual=False,
+                                    fit_intercept=True, intercept_scaling=1,
+                                    l1_ratio=None, max_iter=100,
+                                    multi_class='auto', n_jobs=None,
+                                    penalty='l1', random_state=None,
+                                    solver='liblinear', tol=0.0001, verbose=0,
+                                    warm_start=False))],
+         verbose=False)
+>>> pipe.score(diabetes.data, diabetes.target)
+0.14479638009049775
+>>> pipe.predict(diabetes.data)
+array([178.,  65., 141., 200.,  63., 200.,  71.,  84., 178., 258., 101.,
+        55.,  65., 202.,  65.,  91., 283.,  91., 200.,  90.,  72.,  71.,
+       113., 310., 200., 142., 101.,  85.,  88., 202., 200.,  72., 341.,
+        87.,  72., 102., 283.,  59., 217., 116., 268.,  55.,  71.,  85.,
+        91.,  71., 200., 101., 102., 144., 281., 178., 200., 113., 113.,
+        72., 258.,  72.,  87., 102.,  85., 144.,  71.,  96.,  88., 101.,
+       144.,  71.,  71.,  72.,  72., 270., 202.,  84.,  85.,  71., 178.,
+        55., 152., 113., 109.,  71.,  72., 200.,  65., 141.,  55., 109.,
+        42.,  72.,  85., 180., 270.,  72., 200., 200., 281., 275.,  71.,
+        91., 109., 102., 200.,  91.,  52.,  71.,  72.,  55., 281., 268.,
+       104.,  90., 200., 268., 258., 220., 275., 268., 243., 152., 200.,
+       230., 275.,  84., 182., 202.,  72.,  51.,  72., 268., 243.,  72.,
+       104.,  71., 200., 281.,  72., 281., 275., 281., 178., 268., 202.,
+        90.,  91., 275., 233., 258.,  84., 144., 281.,  90., 243., 104.,
+       131., 217., 200.,  53.,  72., 270.,  72., 243.,  55., 263., 103.,
+        72.,  71., 281., 268., 258.,  71.,  55., 220., 101., 178.,  89.,
+       131., 230.,  65., 128.,  71.,  72.,  91., 102., 281., 101., 233.,
+        65.,  84.,  72., 281., 178.,  65.,  84., 101., 178.,  72., 178.,
+        55., 283.,  72., 104., 196., 217., 131., 258.,  91.,  85., 268.,
+       178.,  84., 141., 109.,  72.,  65., 281., 248., 270.,  72., 101.,
+        71., 200.,  71., 200.,  72., 281.,  71., 102., 200.,  85.,  84.,
+       214.,  84., 141., 281., 178., 109.,  72.,  91., 109., 275., 104.,
+        71.,  71.,  85.,  65.,  96.,  72., 258., 258., 281., 243., 128.,
+       230., 310.,  72., 275.,  77.,  89., 113.,  87., 103., 275.,  71.,
+       178.,  85.,  72.,  84., 275.,  87., 170., 178., 141., 248., 281.,
+        71., 109.,  85.,  42.,  71., 202., 101.,  84.,  72., 178., 230.,
+        87.,  84.,  63., 233., 275., 141.,  65., 113.,  71.,  85.,  72.,
+        55.,  71.,  71., 220., 104., 258., 270.,  84.,  91.,  71., 102.,
+        65., 102., 275., 230., 200., 248., 200.,  59., 202., 155., 131.,
+       281., 128., 230., 248., 248., 230., 220., 131., 275., 200.,  71.,
+       144.,  89., 281., 178.,  71.,  72., 220., 257., 200., 128., 270.,
+       178., 178., 113., 200., 131.,  84.,  88.,  59.,  71., 243.,  71.,
+       102., 258., 220.,  71.,  51., 202.,  72., 277., 281.,  85., 275.,
+       101., 268., 268., 242., 275., 310., 144.,  72., 202.,  71., 200.,
+       200., 217.,  84.,  91.,  91., 281., 281.,  77., 310.,  71.,  84.,
+        71.,  72.,  55., 178.,  51., 310.,  72., 104., 200., 281., 200.,
+        71., 281.,  91., 202., 270.,  85., 131., 258., 281., 281.,  72.,
+       275., 281., 217.,  91., 182., 275.,  85.,  91., 128., 270.,  55.,
+        84.,  55., 104., 248., 233.,  91., 178.,  85., 268.,  71., 268.,
+        72.,  72., 102., 268.,  72.,  85.,  55.,  72., 178.,  84.,  71.,
+       258.,  72.])
+>>> # Pipelines are designed to run end to end (not a piece or part)
+>>> # BUt.... there is a convenient hack to know about
+>>> X_scaled = pipeline[:-1].fit_transform(diabetes.data)
+>>> X_scaled = pipe[:-1].fit_transform(diabetes.data)
+>>> X_scaeld
+>>> X_scaled
+array([[ 0.80050009,  1.06548848,  1.29708846, ..., -0.05449919,
+         0.41855058, -0.37098854],
+       [-0.03956713, -0.93853666, -1.08218016, ..., -0.83030083,
+        -1.43655059, -1.93847913],
+       [ 1.79330681,  1.06548848,  0.93453324, ..., -0.05449919,
+         0.06020733, -0.54515416],
+       ...,
+       [ 0.87686984,  1.06548848, -0.33441002, ..., -0.23293356,
+        -0.98558469,  0.32567395],
+       [-0.9560041 , -0.93853666,  0.82123474, ...,  0.55838411,
+         0.93615545, -0.54515416],
+       [-0.9560041 , -0.93853666, -1.53537419, ..., -0.83030083,
+        -0.08871747,  0.06442552]])
+>>> pipe2 = Pipeline(pipe.sets[:-1] + ('clf', DecisionTreeClassifier()))
+>>> from sklearn.tree import DecisionTreeClassifier
+>>> pipe2 = Pipeline(pipe.sets[:-1] + ('clf', DecisionTreeClassifier()))
+>>> pipe2 = Pipeline(pipe.sets[:-1] + [('clf', DecisionTreeClassifier())])
+>>> pipe2 = Pipeline(pipe.steps[:-1] + [('clf', DecisionTreeClassifier())])
+>>> pipe
+Pipeline(memory=None,
+         steps=[('scaler',
+                 StandardScaler(copy=True, with_mean=True, with_std=True)),
+                ('clf',
+                 LogisticRegression(C=1.0, class_weight=None, dual=False,
+                                    fit_intercept=True, intercept_scaling=1,
+                                    l1_ratio=None, max_iter=100,
+                                    multi_class='auto', n_jobs=None,
+                                    penalty='l1', random_state=None,
+                                    solver='liblinear', tol=0.0001, verbose=0,
+                                    warm_start=False))],
+         verbose=False)
+>>> pipe2
+Pipeline(memory=None,
+         steps=[('scaler',
+                 StandardScaler(copy=True, with_mean=True, with_std=True)),
+                ('clf',
+                 DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None,
+                                        criterion='gini', max_depth=None,
+                                        max_features=None, max_leaf_nodes=None,
+                                        min_impurity_decrease=0.0,
+                                        min_impurity_split=None,
+                                        min_samples_leaf=1, min_samples_split=2,
+                                        min_weight_fraction_leaf=0.0,
+                                        presort='deprecated', random_state=None,
+                                        splitter='best'))],
+         verbose=False)
+>>> # Slide 165
+>>> # Slide 167
+>>> # Third-party libraries
+... import matplotlib.pyplot as plt
+... import numpy as np
+... 
+... x = np.linspace(-10, 10, 200)
+... f1 = np.concatenate([x, x])
+... 
+... f2_class1 = 5 * x + 3 + np.random.normal(loc=0, scale=5, size=len(x))
+... f2_class2 = -5 * x + 3 + np.random.normal(loc=0, scale=5, size=len(x))
+... f2 = np.concatenate([f2_class1, f2_class2])
+... 
+... # Target is interaction of two features
+... y = 2 * f1 * f2 + np.random.normal(loc=0, scale=250, size=len(f1))
+... 
+... plt.figure(figsize=(10, 12))
+... plt.subplot(3, 1, 1)
+... plt.scatter(f1, y)
+... plt.ylabel("target")
+... plt.xlabel("feature 1")
+... plt.title("Interacting Data - Raw")
+... 
+... plt.subplot(3, 1, 2)
+... plt.scatter(f1, y, c=f2)
+... plt.colorbar()
+... plt.ylabel("target")
+... plt.xlabel("feature 1")
+... plt.title("Interacting Data\nColored By Feature 2")
+... 
+... plt.subplot(3, 1, 3)
+... plt.scatter(f1 * f2, y, c=f2)
+... plt.colorbar()
+... plt.ylabel("target")
+... plt.xlabel("Interaction Term ($f1 * f2$)")
+... plt.title("After Combining Terms")
+... 
+... plt.tight_layout()
+...
+>>> %matplotlib qt
+>>> # Third-party libraries
+... import matplotlib.pyplot as plt
+... import numpy as np
+... 
+... x = np.linspace(-10, 10, 200)
+... f1 = np.concatenate([x, x])
+... 
+... f2_class1 = 5 * x + 3 + np.random.normal(loc=0, scale=5, size=len(x))
+... f2_class2 = -5 * x + 3 + np.random.normal(loc=0, scale=5, size=len(x))
+... f2 = np.concatenate([f2_class1, f2_class2])
+... 
+... # Target is interaction of two features
+... y = 2 * f1 * f2 + np.random.normal(loc=0, scale=250, size=len(f1))
+... 
+... plt.figure(figsize=(10, 12))
+... plt.subplot(3, 1, 1)
+... plt.scatter(f1, y)
+... plt.ylabel("target")
+... plt.xlabel("feature 1")
+... plt.title("Interacting Data - Raw")
+... 
+... plt.subplot(3, 1, 2)
+... plt.scatter(f1, y, c=f2)
+... plt.colorbar()
+... plt.ylabel("target")
+... plt.xlabel("feature 1")
+... plt.title("Interacting Data\nColored By Feature 2")
+... 
+... plt.subplot(3, 1, 3)
+... plt.scatter(f1 * f2, y, c=f2)
+... plt.colorbar()
+... plt.ylabel("target")
+... plt.xlabel("Interaction Term ($f1 * f2$)")
+... plt.title("After Combining Terms")
+... 
+... plt.tight_layout()
+...
+>>> clear
+>>> import pandas as pd
+>>> import numpy as np
+>>> ages = pd.Series(range(10, 70, 10))
+>>> ages
+0    10
+1    20
+2    30
+3    40
+4    50
+5    60
+dtype: int64
+>>> # pre-defined age bins
+>>> age_bins = [18, 34, 44, 54, 64]
+>>> pd.cut(ages, age_bins)
+0             NaN
+1    (18.0, 34.0]
+2    (18.0, 34.0]
+3    (34.0, 44.0]
+4    (44.0, 54.0]
+5    (54.0, 64.0]
+dtype: category
+Categories (4, interval[int64]): [(18, 34] < (34, 44] < (44, 54] < (54, 64]]
+>>> pd.cut(ages, age_bins, ret_bins=True)
+>>> pd.cut(ages, age_bins, retbins=True)
+(0             NaN
+ 1    (18.0, 34.0]
+ 2    (18.0, 34.0]
+ 3    (34.0, 44.0]
+ 4    (44.0, 54.0]
+ 5    (54.0, 64.0]
+ dtype: category
+ Categories (4, interval[int64]): [(18, 34] < (34, 44] < (44, 54] < (54, 64]],
+ array([18, 34, 44, 54, 64]))
+>>> # 4 distinct classes (at 25% interval)
+>>> pd.qcut(ages, 4)
+0    (9.999, 22.5]
+1    (9.999, 22.5]
+2     (22.5, 35.0]
+3     (35.0, 47.5]
+4     (47.5, 60.0]
+5     (47.5, 60.0]
+dtype: category
+Categories (4, interval[float64]): [(9.999, 22.5] < (22.5, 35.0] < (35.0, 47.5] < (47.5, 60.0]]
+>>> np.quantile(ages, .25)
+22.5
+>>> np.quantile(ages, 5)
+>>> np.quantile(ages, .5)
+35.0
+>>> np.quantile(ages, .75)
+47.5
+>>> np.quantile(ages, 0)
+10
+>>> np.quantile(ages, 0.25)
+22.5
+>>> np.quantile(ages, 0.5)
+35.0
+>>> np.quantile(ages, 0.75)
+47.5
+>>> np.quantile(ages, 1.0)
+60.0
+>>> pd.qcut(ages, 4)
+0    (9.999, 22.5]
+1    (9.999, 22.5]
+2     (22.5, 35.0]
+3     (35.0, 47.5]
+4     (47.5, 60.0]
+5     (47.5, 60.0]
+dtype: category
+Categories (4, interval[float64]): [(9.999, 22.5] < (22.5, 35.0] < (35.0, 47.5] < (47.5, 60.0]]
+>>> np.median(ages)
+35.0
+>>> pd.qcut(ages, 10)
+0    (9.999, 15.0]
+1     (15.0, 20.0]
+2     (25.0, 30.0]
+3     (35.0, 40.0]
+4     (45.0, 50.0]
+5     (55.0, 60.0]
+dtype: category
+Categories (10, interval[float64]): [(9.999, 15.0] < (15.0, 20.0] < (20.0, 25.0] < (25.0, 30.0] < ... <
+                                     (40.0, 45.0] < (45.0, 50.0] < (50.0, 55.0] < (55.0, 60.0]]
+>>> np.quantile(ages, 0.1)
+15.0
+>>> np.quantile(ages, 0.2)
+20.0
+>>> np.quantile(ages, 0.3)
+25.0
+>>> ls
+>>> %history -pof day3_PM.txt

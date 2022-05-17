@@ -1,0 +1,153 @@
+>>> # MLW 2022-05-09 Day 1 AM
+>>> # slide 58
+>>> a = 1
+>>> a
+1
+>>> %whos
+>>> b = [1, 2, 3]
+>>> %whos
+>>> c = 4.567
+>>> d = {'a': 1, 'b': 2}
+>>> %whos
+>>> del d
+>>> %whos
+>>> d
+>>> del b, c
+>>> a
+1
+>>> b
+>>> c
+>>> %whos
+>>> b = [1, 2, 3]
+>>> c = 4.567
+>>> d = {'a': 1, 'b': 2}
+>>> %whos
+>>> %reset
+>>> a
+>>> b
+>>> c
+>>> d
+>>> %whos
+>>> %lsmagic
+Available line magics:
+%alias  %alias_magic  %autoawait  %autocall  %autoindent  %automagic  %bookmark  %cat  %cd  %clear  %colors  %conda  %config  %cp  %cpaste  %debug  %dhist  %dirs  %doctest_mode  %ed  %edit  %env  %gui  %hist  %history  %killbgscripts  %ldir  %less  %lf  %lk  %ll  %load  %load_ext  %loadpy  %logoff  %logon  %logstart  %logstate  %logstop  %ls  %lsmagic  %lx  %macro  %magic  %man  %matplotlib  %mkdir  %more  %mv  %notebook  %page  %paste  %pastebin  %pdb  %pdef  %pdoc  %pfile  %pinfo  %pinfo2  %pip  %popd  %pprint  %precision  %prun  %psearch  %psource  %pushd  %pwd  %pycat  %pylab  %quickref  %recall  %rehashx  %reload_ext  %rep  %rerun  %reset  %reset_selective  %rm  %rmdir  %run  %save  %sc  %set_env  %store  %sx  %system  %tb  %time  %timeit  %unalias  %unload_ext  %who  %who_ls  %whos  %xdel  %xmode
+
+Available cell magics:
+%%!  %%HTML  %%SVG  %%bash  %%capture  %%debug  %%file  %%html  %%javascript  %%js  %%latex  %%markdown  %%perl  %%prun  %%pypy  %%python  %%python2  %%python3  %%ruby  %%script  %%sh  %%svg  %%sx  %%system  %%time  %%timeit  %%writefile
+
+Automagic is ON, % prefix IS NOT needed for line magics.
+>>> whos
+>>> a = 1
+>>> whos
+>>> %whos
+>>> %pwd
+'/Users/lthomas/Documents/classes/2022-05-09-virtual-mlw/Enthought_MLW/en/student'
+>>> %ls
+>>> %run demo/speed_of_light/speed_of_light.py
+>>> len?
+>>> len??
+>>> import os
+>>> os?
+>>> os??
+>>> # Things to help us find documentation -> help() and ? and ??
+>>> s = 'logan'
+>>> dir(s)
+['__add__',
+ '__class__',
+ '__contains__',
+ '__delattr__',
+ '__dir__',
+ '__doc__',
+ '__eq__',
+ '__format__',
+ '__ge__',
+ '__getattribute__',
+ '__getitem__',
+ '__getnewargs__',
+ '__gt__',
+ '__hash__',
+ '__init__',
+ '__init_subclass__',
+ '__iter__',
+ '__le__',
+ '__len__',
+ '__lt__',
+ '__mod__',
+ '__mul__',
+ '__ne__',
+ '__new__',
+ '__reduce__',
+ '__reduce_ex__',
+ '__repr__',
+ '__rmod__',
+ '__rmul__',
+ '__setattr__',
+ '__sizeof__',
+ '__str__',
+ '__subclasshook__',
+ 'capitalize',
+ 'casefold',
+ 'center',
+ 'count',
+ 'encode',
+ 'endswith',
+ 'expandtabs',
+ 'find',
+ 'format',
+ 'format_map',
+ 'index',
+ 'isalnum',
+ 'isalpha',
+ 'isdecimal',
+ 'isdigit',
+ 'isidentifier',
+ 'islower',
+ 'isnumeric',
+ 'isprintable',
+ 'isspace',
+ 'istitle',
+ 'isupper',
+ 'join',
+ 'ljust',
+ 'lower',
+ 'lstrip',
+ 'maketrans',
+ 'partition',
+ 'replace',
+ 'rfind',
+ 'rindex',
+ 'rjust',
+ 'rpartition',
+ 'rsplit',
+ 'rstrip',
+ 'split',
+ 'splitlines',
+ 'startswith',
+ 'strip',
+ 'swapcase',
+ 'title',
+ 'translate',
+ 'upper',
+ 'zfill']
+>>> # Things to help us find documentation -> help() and ? and ?? and dir()
+>>> # Slide 63
+>>> %history
+>>> %history -n
+>>> _i19
+>>> _i31
+'a = 1'
+>>> # underscore stores the output from the previous executing command
+>>> 2+2
+4
+>>> _
+4
+>>> _ + 2
+6
+>>> _ + 2
+8
+>>> _ + 2
+10
+>>> _ + 2
+12
+>>> # my favorite is "fuzzy" history matching
+>>> %history -pof day1_AM.txt

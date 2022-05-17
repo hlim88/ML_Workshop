@@ -1,0 +1,70 @@
+An Example of a Machine Learning Workflow
+
+1. Data Preparation
+    - Put all our data into ML ready format (Pandas/Numpy); Tidy/long, no NaN, no INF
+    - Splitting data into train/test or train/validation/test (lock away test data)
+    - Depending on data size consider cross validation as well (leave-one-out CV if data is small)
+    - Think about Variance Threshold (before our data split)
+    - Think about scaling our data (after the data splits)
+        - StandardScaler, RobustScaler, etc.
+    - Think about linear transforms
+        - Be careful here with "data leakage" (don't want to cheat and use info from the validation or test splits)
+        - If it is something that will ALWAYS be applied/done... do it before the split
+        - If it is something that will be LEARNED from training and APPLIED to the validation or test... do it after the split (like scaling examples from class)
+        - These are transforms we "know about" based on our knowledge of the data currently (these aren't the univariate transforms)
+
+2. Start with a simple model (making a baseline without any feature engineering)
+    - LogisticRegression model (baseline for classification)
+    - LinearRegressin model (baseline for regression)
+    - DummyClassifier or DummyRegressor as a sanity check as well
+
+3. 1D-viz: univariate; individual feature columns (looking for transformations)
+    - Look at histograms/kde plots/ dist plot for SINGLE feature
+    - np.log(x + 0.001) to make "normalish"
+
+4. (If changes to features) Re-run the simple model and evaluate
+    - Logistic or Linear Regression
+
+5. 2D-viz: bivariate; pairwise feature to feature; sometimes feature to target
+    - Looking for co-linearity and higher order terms
+    - Regplot
+    - x**2 or x**3
+    - PCA or LASSO
+
+6. (If changes to features) Re-run the simple model and evaluate
+    - Logistic or Linear Regression
+
+7. 3D-viz: multivariate; interaction between feature, feature, and target
+    - FacetGrid with pd.qcut or pd.cut
+    - Binning continuous variables
+        - Looking for the slope of the lines to be drastically different window to window (quartered moderator)
+    - If interaction exists, x1*x2
+
+8. (If changes to features) Re-run the simple model and evaluate
+    - Logistic or Linear Regression
+
+9. Consider any additional Feature Engineering
+    - New datasets we can use?
+    - New features we can make (based on subject matter expertise)
+    - Any Numerical or Categorical Feature Engineering from the slides
+
+10. (If changes to features) Re-run the simple model and evaluate
+    - Logistic or Linear Regression
+
+11. Consider Dimensionality reduction (if haven't done so yet) also in depth Feature Selection
+    - PCA
+    - LASSO feature selection (L1 and L2 penalties)
+    - SelectFromModel
+    - SelectKBest
+
+12. (If changes to features) Re-run the simple model and evaluate
+    - Logistic or Linear Regression
+
+13. Run the whole thing again using different estimators
+    - SVM, DT, Ensemble (RF)
+
+14. Pick and evaluate the best model on the holdout (test set that was locked away)
+
+**Save model**
+- joblib.dump() and joblib.load()
+- est.get_params() to save actual parameters to a text file

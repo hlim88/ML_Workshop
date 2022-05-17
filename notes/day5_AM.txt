@@ -1,0 +1,805 @@
+>>> # MLW 2022-05-13 Day 5 AM
+>>> from sklearn import datasets
+>>> from sklearn.tree import DecisionTreeClassifier
+>>> digits = datasets.load_digits()
+>>> clf = DecisionTreeClassifier(max_depth=5)
+>>> clf.fit(digits.data, digits.target)
+DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None, criterion='gini',
+                       max_depth=5, max_features=None, max_leaf_nodes=None,
+                       min_impurity_decrease=0.0, min_impurity_split=None,
+                       min_samples_leaf=1, min_samples_split=2,
+                       min_weight_fraction_leaf=0.0, presort='deprecated',
+                       random_state=None, splitter='best')
+>>> clf.predict(digits.data)
+array([0, 8, 8, ..., 8, 3, 8])
+>>> clf.score(digits.data, digits.target)
+0.7072899276572064
+>>> digits.target
+array([0, 1, 2, ..., 8, 9, 8])
+>>> clf.prdict_proba(digts.data)
+>>> clf.predict_proba(digts.data)
+>>> clf.predict_proba(digits.data)
+array([[1.        , 0.        , 0.        , ..., 0.        , 0.        ,
+        0.        ],
+       [0.00519481, 0.22857143, 0.2961039 , ..., 0.02597403, 0.35844156,
+        0.02597403],
+       [0.00519481, 0.22857143, 0.2961039 , ..., 0.02597403, 0.35844156,
+        0.02597403],
+       ...,
+       [0.00519481, 0.22857143, 0.2961039 , ..., 0.02597403, 0.35844156,
+        0.02597403],
+       [0.        , 0.06761566, 0.02135231, ..., 0.        , 0.0569395 ,
+        0.33807829],
+       [0.00519481, 0.22857143, 0.2961039 , ..., 0.02597403, 0.35844156,
+        0.02597403]])
+>>> clf.predict_proba(digits.data).shape
+(1797, 10)
+>>> pred_probas = clf.predict_proba(digits.data)
+>>> preds = clf.predict(digits.data)
+>>> preds_probas[0]
+>>> pred_probas[0]
+array([1., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
+>>> # 0, 1, 2, 3, 4, 5,6, 7, 8, 9
+>>> preds[0]
+0
+>>> preds[1]
+8
+>>> pred_probas[1]
+array([0.00519481, 0.22857143, 0.2961039 , 0.04675325, 0.01038961,
+       0.        , 0.0025974 , 0.02597403, 0.35844156, 0.02597403])
+>>> pred_probas[1].argmax()
+8
+>>> pred_probas[1].sum()
+1.0
+>>> pred_probas.argmax(axis=1)
+array([0, 8, 8, ..., 8, 3, 8])
+>>> preds
+array([0, 8, 8, ..., 8, 3, 8])
+>>> clear
+>>> from sklearn import datasets
+>>> from sklearn.svm import LinearSVC, SVC
+>>> from sklearn.preprocessing import StandardScaler
+>>> iris = datasets.load_iris()
+>>> scaler = StandardScaler()
+>>> X = scaler.fit_transform(iris.data)
+>>> y = iris.target
+>>> clf = LinearSVC()
+>>> clf.fit(X,y)
+LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+          intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+          multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+          verbose=0)
+>>> clf.score(X,y)
+0.9466666666666667
+>>> clf.predict(X)
+array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
+>>> clf.predict_proba(X)
+>>> # LinearSVC does not have a predict_proba method
+>>> LinearSVC?
+>>> # Similar to SVC with parameter kernel='linear', but implemented in terms of
+... # liblinear rather than libsvm, so it has more flexibility in the choice of
+... # penalties and loss functions and should scale better to large numbers of
+... # samples.
+...
+>>> SVC?
+>>> SVC?
+>>> # C-Support Vector Classification.
+... 
+... # The implementation is based on libsvm. The fit time scales at least
+... # quadratically with the number of samples and may be impractical
+... # beyond tens of thousands of samples. For large datasets
+... # consider using :class:`sklearn.svm.LinearSVC`
+...
+>>> clf2 = SVC(kernel='linear', probability=True)
+>>> clf2.fit(X,y)
+SVC(C=1.0, break_ties=False, cache_size=200, class_weight=None, coef0=0.0,
+    decision_function_shape='ovr', degree=3, gamma='scale', kernel='linear',
+    max_iter=-1, probability=True, random_state=None, shrinking=True, tol=0.001,
+    verbose=False)
+>>> clf.score(X,y)
+0.9466666666666667
+>>> clf2.score(X,y)
+0.9666666666666667
+>>> clf2.predict(X)
+array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
+>>> pred_probas = clf2.predict_proba(X)
+>>> preds = clf2.predict(X)
+>>> preds
+array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
+>>> pred_probas
+array([[9.78423109e-01, 1.42167911e-02, 7.36010037e-03],
+       [9.61941045e-01, 2.70799516e-02, 1.09790033e-02],
+       [9.78726811e-01, 1.31666134e-02, 8.10657552e-03],
+       [9.71976864e-01, 1.76658311e-02, 1.03573050e-02],
+       [9.82902279e-01, 1.05087171e-02, 6.58900345e-03],
+       [9.63778185e-01, 2.54671386e-02, 1.07546765e-02],
+       [9.78857537e-01, 1.22227226e-02, 8.91974007e-03],
+       [9.74466299e-01, 1.69228095e-02, 8.61089107e-03],
+       [9.71605245e-01, 1.75231568e-02, 1.08715984e-02],
+       [9.71828382e-01, 1.92076386e-02, 8.96397901e-03],
+       [9.76611827e-01, 1.62326072e-02, 7.15556531e-03],
+       [9.76064654e-01, 1.49050840e-02, 9.03026175e-03],
+       [9.73191317e-01, 1.80190316e-02, 8.78965100e-03],
+       [9.87141130e-01, 6.80075791e-03, 6.05811239e-03],
+       [9.84545346e-01, 1.09047414e-02, 4.54991288e-03],
+       [9.81928789e-01, 1.19158785e-02, 6.15533274e-03],
+       [9.76591023e-01, 1.58337862e-02, 7.57519125e-03],
+       [9.72052707e-01, 1.89082341e-02, 9.03905915e-03],
+       [9.56743948e-01, 3.31243155e-02, 1.01317365e-02],
+       [9.79966856e-01, 1.24710432e-02, 7.56210036e-03],
+       [9.53860344e-01, 3.50865438e-02, 1.10531121e-02],
+       [9.70021231e-01, 1.98293647e-02, 1.01494041e-02],
+       [9.91811284e-01, 3.97288034e-03, 4.21583544e-03],
+       [9.16367391e-01, 6.34344614e-02, 2.01981479e-02],
+       [9.66942181e-01, 2.13069549e-02, 1.17508637e-02],
+       [9.47986911e-01, 3.87554935e-02, 1.32575953e-02],
+       [9.52308221e-01, 3.36295821e-02, 1.40621966e-02],
+       [9.73676514e-01, 1.81180062e-02, 8.20548015e-03],
+       [9.72564148e-01, 1.92277539e-02, 8.20809822e-03],
+       [9.70610203e-01, 1.88272649e-02, 1.05625320e-02],
+       [9.62827570e-01, 2.54218735e-02, 1.17505566e-02],
+       [9.39723717e-01, 4.65526356e-02, 1.37236469e-02],
+       [9.91472674e-01, 4.65275892e-03, 3.87456668e-03],
+       [9.89076858e-01, 6.66588743e-03, 4.25725500e-03],
+       [9.63492666e-01, 2.55258574e-02, 1.09814768e-02],
+       [9.75190550e-01, 1.69185390e-02, 7.89091132e-03],
+       [9.71998494e-01, 2.06961124e-02, 7.30539375e-03],
+       [9.87789932e-01, 6.97546883e-03, 5.23459892e-03],
+       [9.77879005e-01, 1.30129572e-02, 9.10803812e-03],
+       [9.72072691e-01, 1.91419906e-02, 8.78531893e-03],
+       [9.77049391e-01, 1.48402019e-02, 8.11040724e-03],
+       [9.16469224e-01, 6.32985775e-02, 2.02321988e-02],
+       [9.83285442e-01, 9.10458309e-03, 7.60997467e-03],
+       [9.33942665e-01, 4.71448756e-02, 1.89124596e-02],
+       [9.60133985e-01, 2.66949330e-02, 1.31710823e-02],
+       [9.55031394e-01, 3.18038009e-02, 1.31648054e-02],
+       [9.82724234e-01, 1.05575596e-02, 6.71820685e-03],
+       [9.78204516e-01, 1.31190195e-02, 8.67646449e-03],
+       [9.78644770e-01, 1.43448159e-02, 7.01041397e-03],
+       [9.73428542e-01, 1.79570776e-02, 8.61438020e-03],
+       [1.95544830e-03, 9.87065449e-01, 1.09791030e-02],
+       [3.97563864e-03, 9.75068497e-01, 2.09558644e-02],
+       [3.15518124e-03, 9.27742155e-01, 6.91026637e-02],
+       [8.12560415e-03, 9.54673727e-01, 3.72006690e-02],
+       [4.64275332e-03, 8.99374411e-01, 9.59828361e-02],
+       [7.97150325e-03, 9.60278064e-01, 3.17504329e-02],
+       [5.10914236e-03, 9.27345155e-01, 6.75457024e-02],
+       [9.16865496e-02, 8.86783625e-01, 2.15298249e-02],
+       [2.82731935e-03, 9.83030749e-01, 1.41419319e-02],
+       [1.68209222e-02, 9.61428305e-01, 2.17507729e-02],
+       [3.01690860e-02, 9.60902608e-01, 8.92830636e-03],
+       [6.88870029e-03, 9.69542255e-01, 2.35690448e-02],
+       [6.75010161e-03, 9.89096346e-01, 4.15355234e-03],
+       [5.52516586e-03, 9.29215953e-01, 6.52588814e-02],
+       [2.67228004e-02, 9.66633166e-01, 6.64403359e-03],
+       [2.97803584e-03, 9.89554759e-01, 7.46720547e-03],
+       [9.39184961e-03, 9.10420549e-01, 8.01876018e-02],
+       [1.88727316e-02, 9.76399517e-01, 4.72775128e-03],
+       [1.21603808e-02, 5.58380067e-01, 4.29459552e-01],
+       [1.59484008e-02, 9.78597139e-01, 5.45445988e-03],
+       [1.55870581e-02, 4.88865009e-01, 4.95547932e-01],
+       [7.33355735e-03, 9.87635567e-01, 5.03087610e-03],
+       [1.25571782e-02, 4.94305831e-01, 4.93136990e-01],
+       [5.04303326e-03, 9.74873780e-01, 2.00831870e-02],
+       [4.39208598e-03, 9.89093812e-01, 6.51410157e-03],
+       [3.00993952e-03, 9.85708262e-01, 1.12817980e-02],
+       [3.21490065e-03, 9.29043593e-01, 6.77415059e-02],
+       [1.01589836e-02, 5.31295075e-01, 4.58545941e-01],
+       [6.28897934e-03, 9.15477333e-01, 7.82336879e-02],
+       [3.92247988e-02, 9.51920320e-01, 8.85488167e-03],
+       [1.70742305e-02, 9.77006761e-01, 5.91900809e-03],
+       [2.63569435e-02, 9.67216044e-01, 6.42701198e-03],
+       [1.32585753e-02, 9.82039162e-01, 4.70226308e-03],
+       [1.61409818e-02, 2.51270193e-01, 7.32588825e-01],
+       [1.16683963e-02, 8.93674605e-01, 9.46569986e-02],
+       [6.86206725e-03, 9.59768602e-01, 3.33693308e-02],
+       [3.04443375e-03, 9.53931107e-01, 4.30244588e-02],
+       [4.22007274e-03, 9.28235516e-01, 6.75444109e-02],
+       [1.71626046e-02, 9.75432473e-01, 7.40492217e-03],
+       [9.98535652e-03, 9.70078056e-01, 1.99365877e-02],
+       [1.00458197e-02, 9.65066095e-01, 2.48880850e-02],
+       [5.23523797e-03, 9.60537490e-01, 3.42272725e-02],
+       [9.97289462e-03, 9.83824853e-01, 6.20225230e-03],
+       [6.81529651e-02, 9.15787508e-01, 1.60595267e-02],
+       [9.78950996e-03, 9.71796304e-01, 1.84141862e-02],
+       [1.78977713e-02, 9.76226105e-01, 5.87612380e-03],
+       [1.15581820e-02, 9.78734908e-01, 9.70690956e-03],
+       [5.64097404e-03, 9.86481149e-01, 7.87787664e-03],
+       [9.37949831e-02, 8.84867392e-01, 2.13376249e-02],
+       [1.09458281e-02, 9.79471711e-01, 9.58246125e-03],
+       [2.35522407e-03, 1.39191747e-04, 9.97505584e-01],
+       [1.19035023e-02, 2.58585343e-02, 9.62237963e-01],
+       [3.79417019e-03, 3.23515689e-03, 9.92970673e-01],
+       [1.00868848e-02, 3.17506805e-02, 9.58162435e-01],
+       [3.85739734e-03, 1.20846875e-03, 9.94934134e-01],
+       [1.79689952e-03, 4.68762367e-04, 9.97734338e-01],
+       [2.60893734e-02, 1.79168095e-01, 7.94742531e-01],
+       [4.32486468e-03, 7.46129753e-03, 9.88213838e-01],
+       [5.39048068e-03, 6.14604981e-03, 9.88463470e-01],
+       [2.31400693e-03, 5.89125083e-04, 9.97096868e-01],
+       [1.17622957e-02, 1.10659702e-01, 8.77578002e-01],
+       [8.74195674e-03, 2.26710160e-02, 9.68587027e-01],
+       [5.80733765e-03, 9.58725421e-03, 9.84605408e-01],
+       [9.11149250e-03, 7.87036157e-03, 9.83018146e-01],
+       [4.64770110e-03, 7.53709787e-04, 9.94598589e-01],
+       [6.02231600e-03, 5.39997479e-03, 9.88577709e-01],
+       [1.08472447e-02, 7.21912708e-02, 9.16961485e-01],
+       [2.71599320e-03, 2.48932880e-03, 9.94794678e-01],
+       [1.77946107e-06, 2.13189835e-06, 9.99996089e-01],
+       [1.54404356e-02, 1.60439742e-01, 8.24119823e-01],
+       [3.75377262e-03, 2.18016935e-03, 9.94066058e-01],
+       [1.32135466e-02, 2.72112093e-02, 9.59575244e-01],
+       [1.64755364e-03, 4.07235577e-04, 9.97945211e-01],
+       [1.34549024e-02, 1.53891760e-01, 8.32653338e-01],
+       [6.52137225e-03, 1.21689678e-02, 9.81309660e-01],
+       [7.91628375e-03, 4.99511202e-02, 9.42132596e-01],
+       [1.46842854e-02, 2.46509797e-01, 7.38805917e-01],
+       [1.54567869e-02, 2.94247348e-01, 6.90295866e-01],
+       [4.85357726e-03, 2.42685502e-03, 9.92719568e-01],
+       [9.25581111e-03, 2.04584816e-01, 7.86159373e-01],
+       [3.74720664e-03, 5.26254333e-03, 9.90990250e-01],
+       [5.43729274e-03, 3.88138765e-02, 9.55748831e-01],
+       [3.93368545e-03, 1.11212388e-03, 9.94954191e-01],
+       [1.16134228e-02, 5.76571277e-01, 4.11815300e-01],
+       [1.51763767e-02, 1.86757682e-01, 7.98065941e-01],
+       [1.81186305e-03, 5.86601742e-04, 9.97601535e-01],
+       [4.58452440e-03, 1.60157101e-03, 9.93813905e-01],
+       [1.19086116e-02, 9.05349061e-02, 8.97556482e-01],
+       [1.59923520e-02, 3.48293286e-01, 6.35714362e-01],
+       [6.79889658e-03, 2.04919217e-02, 9.72709182e-01],
+       [3.17719202e-03, 8.35118102e-04, 9.95987690e-01],
+       [5.85918163e-03, 1.19454675e-02, 9.82195351e-01],
+       [1.19035023e-02, 2.58585343e-02, 9.62237963e-01],
+       [3.20498821e-03, 1.00946757e-03, 9.95785544e-01],
+       [2.82507337e-03, 5.34082069e-04, 9.96640845e-01],
+       [5.12719734e-03, 5.07526088e-03, 9.89797542e-01],
+       [9.73537848e-03, 2.90595686e-02, 9.61205053e-01],
+       [1.00411926e-02, 4.28726229e-02, 9.47086185e-01],
+       [6.91200782e-03, 6.29080921e-03, 9.86797183e-01],
+       [1.62462927e-02, 1.49155776e-01, 8.34597931e-01]])
+>>> pred_probas.argmax(axis=0)
+array([ 22,  65, 118])
+>>> pred_probas.argmax(axis=1)
+array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
+>>> pred_probas.sum(axis=0)
+array([49.63703125, 49.62524342, 50.73772533])
+>>> pred_probas.sum(axis=1)
+array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
+>>> # In regression, the model.score() method defaults to R2
+>>> # In classificatin, the model.score() method defaults to accuracy
+>>> errors = preds != irirs.target
+>>> errors = preds != iris.target
+>>> errors.sum()
+5
+>>> 1 - errors.sum()/len(iris.target)
+0.9666666666666667
+>>> clf.score(X,y)
+0.9466666666666667
+>>> clf2.score(X,y)
+0.9666666666666667
+>>> # sq_errors = (pred - iris.target)**2
+>>> # demo/ml_sklearn/concrete/Concrete_CompareRC.ipynb
+>>> # SLide 206
+>>> clear
+>>> # Slide 206
+>>> # what is micro and macro averaging for classification scores?
+>>> # Macro-average will compute the metric independently for each class and then take the average (thus treating each class equally)
+>>> # Micro-average will aggregate the contributions of all classes to compute the average
+>>> # If you think there is a class imbalance in your target, use micro-averaging
+>>> # Example
+>>> # Class A, Class B, Class C, and Class D
+>>> # Class A: 1 TP and 1 FP
+>>> # Class B: 10 TP and 90 FP
+>>> # Class C: 1 TP and 1 FP
+>>> # Class D: 1 TP and 1 FP
+>>> # Precision is TP / (TP + FP)
+>>> p_a = 1 / (1+1)
+>>> p_b = 10 / (10+90)
+>>> p_b = 1/(1_+1)
+>>> p_b = 1/(1+1)
+>>> p_c = 1/(1+1)
+>>> p_b = 10 / (10+90)
+>>> p_d = 1 / (1+1)
+>>> p_a
+0.5
+>>> p_b
+0.1
+>>> p_c
+0.5
+>>> p_d
+0.5
+>>> # Notice that p_a, p_c, and p_d are all 0.5 and p_b = 0.1
+>>> # a MACRO-average would be (0.5 + 0.1 + 0.5 + 0.5)/4
+>>> macro = (0.5 + 0.1 + 0.5 + 0.5)/4
+>>> macro
+0.4
+>>> # a MICRO-average would take the counts of each into consideration (aggregate)
+>>> micro (1+10+1+1)/(2+100+2+2)
+>>> micro= (1+10+1+1)/(2+100+2+2)
+>>> micro
+0.12264150943396226
+>>> macro, micro
+(0.4, 0.12264150943396226)
+>>> clear
+>>> # slide 206
+>>> from sklearn.metrics import SCORERS
+>>> sorted(SCORERS)
+['accuracy',
+ 'adjusted_mutual_info_score',
+ 'adjusted_rand_score',
+ 'average_precision',
+ 'balanced_accuracy',
+ 'completeness_score',
+ 'explained_variance',
+ 'f1',
+ 'f1_macro',
+ 'f1_micro',
+ 'f1_samples',
+ 'f1_weighted',
+ 'fowlkes_mallows_score',
+ 'homogeneity_score',
+ 'jaccard',
+ 'jaccard_macro',
+ 'jaccard_micro',
+ 'jaccard_samples',
+ 'jaccard_weighted',
+ 'max_error',
+ 'mutual_info_score',
+ 'neg_brier_score',
+ 'neg_log_loss',
+ 'neg_mean_absolute_error',
+ 'neg_mean_gamma_deviance',
+ 'neg_mean_poisson_deviance',
+ 'neg_mean_squared_error',
+ 'neg_mean_squared_log_error',
+ 'neg_median_absolute_error',
+ 'neg_root_mean_squared_error',
+ 'normalized_mutual_info_score',
+ 'precision',
+ 'precision_macro',
+ 'precision_micro',
+ 'precision_samples',
+ 'precision_weighted',
+ 'r2',
+ 'recall',
+ 'recall_macro',
+ 'recall_micro',
+ 'recall_samples',
+ 'recall_weighted',
+ 'roc_auc',
+ 'roc_auc_ovo',
+ 'roc_auc_ovo_weighted',
+ 'roc_auc_ovr',
+ 'roc_auc_ovr_weighted',
+ 'v_measure_score']
+>>> clear
+>>> from sklearn import datasets
+>>> from sklearn.svm import SVC
+>>> from sklearn.preprocessing import StandardScaler
+>>> from sklearn.pipeline import Pipeline
+>>> from sklearn.model_selection import GridSearchCV
+>>> iris = datasets.load_iris()
+>>> pipe = Pipeline(
+...     [
+...         ('scaler', StandardScaler()),
+...         ('clf', SVC())
+...     ]
+... )
+...
+>>> params = {'clr__kernel': ['rbf', 'linear'], 'clf__C': [0.25, 05., 1.0]}
+>>> grid = GridSearchCV(pipe, params, scoring={'F1': 'f1', 'Recall': 'recall', 'Precision': 'precision_micro'}, refit='F1')
+>>> grid.fit(iris.data, iris.target)
+>>> params = {'clf__kernel': ['rbf', 'linear'], 'clf__C': [0.25, 05., 1.0]}
+>>> grid = GridSearchCV(pipe, params, scoring={'F1': 'f1', 'Recall': 'recall', 'Precision': 'precision_micro'}, refit='F1')
+>>> grid.fit(iris.data, iris.target)
+>>> params = {'clf__kernel': ['rbf', 'linear'], 'clf__C': [0.25, 0.5, 1.0]}
+>>> grid = GridSearchCV(pipe, params, scoring={'F1': 'f1', 'Recall': 'recall', 'Precision': 'precision_micro'}, refit='F1')
+>>> grid.fit(iris.data, iris.target)
+>>> grid = GridSearchCV(pipe, params, scoring={'F1': 'f1_macro', 'Recall': 'recall_micro', 'Precision': 'precision_micro'}, refit='F1')
+>>> grid.fit(iris.data, iris.target)
+GridSearchCV(cv=None, error_score=nan,
+             estimator=Pipeline(memory=None,
+                                steps=[('scaler',
+                                        StandardScaler(copy=True,
+                                                       with_mean=True,
+                                                       with_std=True)),
+                                       ('clf',
+                                        SVC(C=1.0, break_ties=False,
+                                            cache_size=200, class_weight=None,
+                                            coef0=0.0,
+                                            decision_function_shape='ovr',
+                                            degree=3, gamma='scale',
+                                            kernel='rbf', max_iter=-1,
+                                            probability=False,
+                                            random_state=None, shrinking=True,
+                                            tol=0.001, verbose=False))],
+                                verbose=False),
+             iid='deprecated', n_jobs=None,
+             param_grid={'clf__C': [0.25, 0.5, 1.0],
+                         'clf__kernel': ['rbf', 'linear']},
+             pre_dispatch='2*n_jobs', refit='F1', return_train_score=False,
+             scoring={'F1': 'f1_macro', 'Precision': 'precision_micro',
+                      'Recall': 'recall_micro'},
+             verbose=0)
+>>> import pandas as pd
+>>> df = pd.DataFrame(grid.cv_results_)
+>>> df.filter(like='score')
+   mean_score_time  std_score_time
+0         0.003896        0.000513
+1         0.003469        0.000509
+2         0.002970        0.000449
+3         0.002901        0.000335
+4         0.003176        0.000449
+5         0.002969        0.000615
+>>> df.filter(like='f1')
+Empty DataFrame
+Columns: []
+Index: [0, 1, 2, 3, 4, 5]
+>>> df.filter(like='F1')
+   split0_test_F1  split1_test_F1  split2_test_F1  split3_test_F1  split4_test_F1  mean_test_F1  std_test_F1  rank_test_F1
+0        0.933333        0.966583        0.966583        0.897698             1.0      0.952840     0.034707             6
+1        0.966583        0.966583        0.932660        0.933333             1.0      0.959832     0.025080             5
+2        0.966583        0.966583        0.966583        0.933333             1.0      0.966617     0.021082             2
+3        0.966583        1.000000        1.000000        0.933333             1.0      0.979983     0.026675             1
+4        0.966583        0.966583        0.966583        0.933333             1.0      0.966617     0.021082             2
+5        0.966583        1.000000        0.932660        0.933333             1.0      0.966515     0.029966             4
+>>> df.filter(like='Recall')
+   split0_test_Recall  split1_test_Recall  split2_test_Recall  split3_test_Recall  split4_test_Recall  mean_test_Recall  std_test_Recall  rank_test_Recall
+0            0.933333            0.966667            0.966667            0.900000                 1.0          0.953333         0.033993                 6
+1            0.966667            0.966667            0.933333            0.933333                 1.0          0.960000         0.024944                 5
+2            0.966667            0.966667            0.966667            0.933333                 1.0          0.966667         0.021082                 3
+3            0.966667            1.000000            1.000000            0.933333                 1.0          0.980000         0.026667                 1
+4            0.966667            0.966667            0.966667            0.933333                 1.0          0.966667         0.021082                 3
+5            0.966667            1.000000            0.933333            0.933333                 1.0          0.966667         0.029814                 2
+>>> df.filter(like='Precision')
+   split0_test_Precision  split1_test_Precision  split2_test_Precision  ...  mean_test_Precision  std_test_Precision  rank_test_Precision
+0               0.933333               0.966667               0.966667  ...             0.953333            0.033993                    6
+1               0.966667               0.966667               0.933333  ...             0.960000            0.024944                    5
+2               0.966667               0.966667               0.966667  ...             0.966667            0.021082                    3
+3               0.966667               1.000000               1.000000  ...             0.980000            0.026667                    1
+4               0.966667               0.966667               0.966667  ...             0.966667            0.021082                    3
+5               0.966667               1.000000               0.933333  ...             0.966667            0.029814                    2
+
+[6 rows x 8 columns]
+>>> grid.best_estimator_
+Pipeline(memory=None,
+         steps=[('scaler',
+                 StandardScaler(copy=True, with_mean=True, with_std=True)),
+                ('clf',
+                 SVC(C=0.5, break_ties=False, cache_size=200, class_weight=None,
+                     coef0=0.0, decision_function_shape='ovr', degree=3,
+                     gamma='scale', kernel='linear', max_iter=-1,
+                     probability=False, random_state=None, shrinking=True,
+                     tol=0.001, verbose=False))],
+         verbose=False)
+>>> clear
+>>> # Slide 210
+>>> from sklearn import metrics
+>>> import numpy as np
+>>> y = np.zeros(300)
+>>> y[:80] = 1
+>>> y
+array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
+>>> # binary classification
+>>> (y==0).sum()
+220
+>>> (y==1).sum()
+80
+>>> (y==0).sum()  # true neg
+220
+>>> (y==1).sum()  # true pos
+80
+>>> preds = y.copy()
+>>> pred[:30] = 0  # 30 of the true pos predicted as neg
+>>> preds[:30] = 0  # 30 of the true pos predicted as neg
+>>> preds[280:] = 1 # 20 of the true neg predicted as pos
+>>> (preds==0).sum()
+230
+>>> (preds==1).sum()
+70
+>>> conf_matrix = metrics.confusion_matrix(y_true=y, y_pred=preds)
+>>> conf_matrix
+array([[200,  20],
+       [ 30,  50]])
+>>> # cols are predicted and rows are truth
+>>> # 200 correct (0,0)
+>>> # 30 where prediction is 1 but truth is 0 (false pos)
+>>> # 20 where prediction is 1 but truth is 0 (false pos)
+>>> # wrong sorry... start over
+>>> # cols are predicted and rows are truth
+>>> # 200 correct (0,0)
+>>> # 20 where prediction is 1 and the truth is 0 (false pos)
+>>> # 30 where the prediction is 0 and the truth is 1 (false neg)
+>>> # 50 correct (1,1)
+>>> conf_matrix
+array([[200,  20],
+       [ 30,  50]])
+>>> conf_matrix.flatten()
+array([200,  20,  30,  50])
+>>> tn, fp, fn, tn = conf_matrix.flatten()
+>>> tn
+50
+>>> tp, fp, fn, tn = conf_matrix.flatten()
+>>> tp
+200
+>>> fp
+20
+>>> fn
+30
+>>> tn
+50
+>>> p = tp/(tp+fp)
+>>> r = tp/(tp+fn)
+>>> p
+0.9090909090909091
+>>> tp
+200
+>>> fp
+20
+>>> fn
+30
+>>> tn
+50
+>>> conf_matrix
+array([[200,  20],
+       [ 30,  50]])
+>>> # 0 1
+>>> fp
+20
+>>> fn
+30
+>>> metrics.precision(y, preds)
+>>> tp
+200
+>>> conf_matrix
+array([[200,  20],
+       [ 30,  50]])
+>>> tn, fp, fn, tp = conf_matrix.flatten()
+>>> p = tp/(tp+fp)
+>>> r = tp/(tp+fn)
+>>> p
+0.7142857142857143
+>>> r
+0.625
+>>> preds
+array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
+>>> metrics.precision_score(y, preds)
+0.7142857142857143
+>>> p
+0.7142857142857143
+>>> metrics.recall_score(y, preds)
+0.625
+>>> r
+0.625
+>>> %matplotlib qt
+>>> import matplotlib.pylot as plt
+>>> import matplotlib.pyplot as plt
+>>> 
+... import matplotlib.pyplot as plt
+... import numpy as np
+... 
+... n = 1000
+... np.random.seed(0)
+... half_slide_size = (4, 6)
+... half_slide_dot = 25
+... 
+... # Random samples from Gaussian dist with mean=3 std=1
+... x = np.random.normal(3, 1, n)
+... 
+... # Binomial samples
+... # 1 sample trials with 0.5 probability of success
+... y = np.random.binomial(1, 0.5, n)
+... 
+... # Target class (y-axis)
+... z = np.empty_like(x)
+... z[np.where(y == 0)] = 1 + x[np.where(y == 0)]
+... z[np.where(y == 1)] = 2 + x[np.where(y == 1)]
+... z += np.random.normal(0, 1, n) + 0.3
+... 
+... # Transform
+... interactor = y.copy()
+... # interactor[interactor==0] = 0  # CHANGE ME!
+... interactor[interactor == 0] = -1  # CHANGE ME!
+... 
+... fig, (upper, lower) = plt.subplots(2, 1, figsize=half_slide_size)
+... upper.scatter(x, z, c=y, s=half_slide_dot, cmap=plt.cm.viridis)
+... lower.scatter(x * interactor, z, c=y, s=half_slide_dot, cmap=plt.cm.viridis)
+... upper.set_title("Interacting data")
+... upper.set_xticks([])
+... upper.set_yticks([])
+... lower.set_title("After combining terms")
+... lower.set_xticks([])
+... lower.set_yticks([])
+... fig.tight_layout()
+...
+>>> y
+array([1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0,
+       1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0,
+       1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0,
+       1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0,
+       0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+       0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0,
+       1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0,
+       1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+       0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0,
+       0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0,
+       0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1,
+       0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0,
+       1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0,
+       1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0,
+       1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0,
+       0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1,
+       1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1,
+       0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0,
+       0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0,
+       0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1,
+       1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1,
+       1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1,
+       0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0,
+       0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0,
+       0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1,
+       1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0,
+       0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1,
+       0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0,
+       0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1,
+       1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+       0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+       1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0,
+       1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1,
+       1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1,
+       1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1,
+       1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1,
+       1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1,
+       0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+       1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0,
+       0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0,
+       0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0,
+       1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1,
+       1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+       0, 1, 1, 0, 1, 1, 1, 1, 1, 0])
+>>> 
+... import matplotlib.pyplot as plt
+... import numpy as np
+... 
+... n = 1000
+... np.random.seed(0)
+... half_slide_size = (4, 6)
+... half_slide_dot = 25
+... 
+... # Random samples from Gaussian dist with mean=3 std=1
+... x = np.random.normal(3, 1, n)
+... 
+... # Binomial samples
+... # 1 sample trials with 0.5 probability of success
+... y = np.random.binomial(1, 0.5, n)
+... 
+... # Target class (y-axis)
+... z = np.empty_like(x)
+... z[np.where(y == 0)] = 1 + x[np.where(y == 0)]
+... z[np.where(y == 1)] = 2 + x[np.where(y == 1)]
+... z += np.random.normal(0, 1, n) + 0.3
+... 
+... # Transform
+... interactor = y.copy()
+... interactor[interactor==0] = 0  # CHANGE ME!
+... #interactor[interactor == 0] = -1  # CHANGE ME!
+... 
+... fig, (upper, lower) = plt.subplots(2, 1, figsize=half_slide_size)
+... upper.scatter(x, z, c=y, s=half_slide_dot, cmap=plt.cm.viridis)
+... lower.scatter(x * interactor, z, c=y, s=half_slide_dot, cmap=plt.cm.viridis)
+... upper.set_title("Interacting data")
+... upper.set_xticks([])
+... upper.set_yticks([])
+... lower.set_title("After combining terms")
+... lower.set_xticks([])
+... lower.set_yticks([])
+... fig.tight_layout()
+...
+>>> 
+... import matplotlib.pyplot as plt
+... import numpy as np
+... 
+... n = 1000
+... np.random.seed(0)
+... half_slide_size = (4, 6)
+... half_slide_dot = 25
+... 
+... # Random samples from Gaussian dist with mean=3 std=1
+... x = np.random.normal(3, 1, n)
+... 
+... # Binomial samples
+... # 1 sample trials with 0.5 probability of success
+... y = np.random.binomial(1, 0.5, n)
+... 
+... # Target class (y-axis)
+... z = np.empty_like(x)
+... z[np.where(y == 0)] = 1 + x[np.where(y == 0)]
+... z[np.where(y == 1)] = 2 + x[np.where(y == 1)]
+... z += np.random.normal(0, 1, n) + 0.3
+... 
+... # Transform
+... interactor = y.copy()
+... #interactor[interactor==0] = 0  # CHANGE ME!
+... interactor[interactor == 0] = -1  # CHANGE ME!
+... 
+... fig, (upper, lower) = plt.subplots(2, 1, figsize=half_slide_size)
+... upper.scatter(x, z, c=y, s=half_slide_dot, cmap=plt.cm.viridis)
+... lower.scatter(x * interactor, z, c=y, s=half_slide_dot, cmap=plt.cm.viridis)
+... upper.set_title("Interacting data")
+... upper.set_xticks([])
+... upper.set_yticks([])
+... lower.set_title("After combining terms")
+... lower.set_xticks([])
+... lower.set_yticks([])
+... fig.tight_layout()
+...
+>>> ls
+>>> %history -pof day5_AM.txt

@@ -1,0 +1,346 @@
+>>> # MLW 2022-05-13 Day 5 PM
+>>> # Slide 228
+>>> # Slide 229 Logistic Regression example
+>>> import numpy as np
+>>> # make fake data
+>>> ones = np.ones(50)
+>>> zeros = np.zeros(50)
+>>> target = np.concatenate([zeros, ones])
+>>> x = np.linspace(0,100, len(target))
+>>> %matplotlib qt
+>>> import matplotlib.pyploy as plt
+>>> import matplotlib.pyplot as plt
+>>> plt.plot(x, target, 'C0o', label='raw')
+[<matplotlib.lines.Line2D at 0x7ffc41973c88>]
+>>> from sklearn.linear_model import LinearRegression
+>>> model = LinearRegression()
+>>> model.fit(x, target)
+>>> x = x.reshape(-1,1)
+>>> model.fit(x, target)
+LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
+>>> preds = model.predict(x)
+>>> plt.plot(x, preds, 'C1o', label='preds')
+[<matplotlib.lines.Line2D at 0x7ffc43b5cef0>]
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7ffc43b4a978>
+>>> plt.tight_layout()
+>>> plt.title(f"{model.__class__.__name__}")
+Text(0.5, 1.0, 'LinearRegression')
+>>> from sklearn.linear_model import LogisticRegression
+>>> model2 = LogisticRegression()
+>>> model2.fit(x, target)
+LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
+                   intercept_scaling=1, l1_ratio=None, max_iter=100,
+                   multi_class='auto', n_jobs=None, penalty='l2',
+                   random_state=None, solver='lbfgs', tol=0.0001, verbose=0,
+                   warm_start=False)
+>>> preds2 = model2.predict(x)
+>>> pred
+>>> preds
+array([-0.24257426, -0.22757276, -0.21257126, -0.19756976, -0.18256826,
+       -0.16756676, -0.15256526, -0.13756376, -0.12256226, -0.10756076,
+       -0.09255926, -0.07755776, -0.06255626, -0.04755476, -0.03255326,
+       -0.01755176, -0.00255026,  0.01245125,  0.02745275,  0.04245425,
+        0.05745575,  0.07245725,  0.08745875,  0.10246025,  0.11746175,
+        0.13246325,  0.14746475,  0.16246625,  0.17746775,  0.19246925,
+        0.20747075,  0.22247225,  0.23747375,  0.25247525,  0.26747675,
+        0.28247825,  0.29747975,  0.31248125,  0.32748275,  0.34248425,
+        0.35748575,  0.37248725,  0.38748875,  0.40249025,  0.41749175,
+        0.43249325,  0.44749475,  0.46249625,  0.47749775,  0.49249925,
+        0.50750075,  0.52250225,  0.53750375,  0.55250525,  0.56750675,
+        0.58250825,  0.59750975,  0.61251125,  0.62751275,  0.64251425,
+        0.65751575,  0.67251725,  0.68751875,  0.70252025,  0.71752175,
+        0.73252325,  0.74752475,  0.76252625,  0.77752775,  0.79252925,
+        0.80753075,  0.82253225,  0.83753375,  0.85253525,  0.86753675,
+        0.88253825,  0.89753975,  0.91254125,  0.92754275,  0.94254425,
+        0.95754575,  0.97254725,  0.98754875,  1.00255026,  1.01755176,
+        1.03255326,  1.04755476,  1.06255626,  1.07755776,  1.09255926,
+        1.10756076,  1.12256226,  1.13756376,  1.15256526,  1.16756676,
+        1.18256826,  1.19756976,  1.21257126,  1.22757276,  1.24257426])
+>>> preds2
+array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
+>>> plt.figure()
+<Figure size 1280x960 with 0 Axes>
+>>> plt.plot(x, target, 'C0o', label='raw')
+[<matplotlib.lines.Line2D at 0x7ffc2bbe7e10>]
+>>> plt.plot(x, preds2, 'C1o', label='preds')
+[<matplotlib.lines.Line2D at 0x7ffc2bc10e10>]
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7ffc2bbc7ac8>
+>>> plt.title(f"{model2.__class__.__name__}")
+Text(0.5, 1.0, 'LogisticRegression')
+>>> plt.tight_layout()
+>>> model.score(x, target)
+0.7500750075007501
+>>> model2.score(x, target)
+1.0
+>>> model.coef_
+array([0.01485149])
+>>> model.intercept_
+-0.24257425742574257
+>>> model2.coef_
+array([[1.19070915]])
+>>> model2.intercept_
+array([-59.53545291])
+>>> # exercises/ml_sklearn/classification/classification_exercises_en.ipynb
+>>> # Sldie 235
+>>> clear
+>>> from sklearn import datasets
+>>> from sklearn.cluster import KMeans
+>>> KMeans?
+>>> iris = datasets.load_iris()
+>>> cluster_model = KMeans()  # default is k=8
+>>> cluster_model.fit(iris.data)
+KMeans(algorithm='auto', copy_x=True, init='k-means++', max_iter=300,
+       n_clusters=8, n_init=10, n_jobs=None, precompute_distances='auto',
+       random_state=None, tol=0.0001, verbose=0)
+>>> cluster_model.labels_
+array([1, 5, 5, 5, 1, 1, 5, 1, 5, 5, 1, 5, 5, 5, 1, 1, 1, 1, 1, 1, 1, 1,
+       5, 1, 5, 5, 1, 1, 1, 5, 5, 1, 1, 1, 5, 5, 1, 1, 5, 1, 1, 5, 5, 1,
+       1, 5, 1, 5, 1, 5, 6, 6, 6, 2, 6, 2, 6, 7, 6, 2, 7, 2, 2, 6, 2, 6,
+       2, 2, 6, 2, 4, 2, 4, 6, 6, 6, 6, 6, 6, 2, 2, 7, 2, 4, 2, 6, 6, 6,
+       2, 2, 2, 6, 2, 7, 2, 2, 2, 6, 7, 2, 3, 4, 0, 3, 3, 0, 2, 0, 3, 0,
+       3, 4, 3, 4, 4, 3, 3, 0, 0, 4, 3, 4, 0, 4, 3, 0, 4, 4, 3, 0, 0, 0,
+       3, 4, 4, 0, 3, 3, 4, 3, 3, 3, 4, 3, 3, 3, 4, 3, 3, 4], dtype=int32)
+>>> predicted = cluster_model.predict(iris.data)
+>>> predicted
+array([1, 5, 5, 5, 1, 1, 5, 1, 5, 5, 1, 5, 5, 5, 1, 1, 1, 1, 1, 1, 1, 1,
+       5, 1, 5, 5, 1, 1, 1, 5, 5, 1, 1, 1, 5, 5, 1, 1, 5, 1, 1, 5, 5, 1,
+       1, 5, 1, 5, 1, 5, 6, 6, 6, 2, 6, 2, 6, 7, 6, 2, 7, 2, 2, 6, 2, 6,
+       2, 2, 6, 2, 4, 2, 4, 6, 6, 6, 6, 6, 6, 2, 2, 7, 2, 4, 2, 6, 6, 6,
+       2, 2, 2, 6, 2, 7, 2, 2, 2, 6, 7, 2, 3, 4, 0, 3, 3, 0, 2, 0, 3, 0,
+       3, 4, 3, 4, 4, 3, 3, 0, 0, 4, 3, 4, 0, 4, 3, 0, 4, 4, 3, 0, 0, 0,
+       3, 4, 4, 0, 3, 3, 4, 3, 3, 3, 4, 3, 3, 3, 4, 3, 3, 4], dtype=int32)
+>>> plt.subplot(3,1,1)
+<AxesSubplot:>
+>>> plt.scatter(iris.data[:, 0], iris.data[:, 1], c='C0', label='raw')
+<matplotlib.collections.PathCollection at 0x7ffc2f4b24e0>
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7ffc2f4b2358>
+>>> plt.tight_layout()
+>>> plt.subplot(3,1,2)
+<AxesSubplot:>
+>>> plt.scatter(iris.data[:, 0], iris.data[:, 1], c=iris.target, label='raw')
+<matplotlib.collections.PathCollection at 0x7ffc2943a400>
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7ffc294290b8>
+>>> plot.tight_layout()
+>>> plt.tight_layout()
+>>> plt.scatter(iris.data[:, 0], iris.data[:, 1], c=predicted, label='predicted')
+<matplotlib.collections.PathCollection at 0x7ffc298b28d0>
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7ffc2940b7b8>
+>>> plt.tigh_layout()
+>>> plt.tight_layout()
+>>> plt.xlabel(iris.feature_names[0])
+Text(0.5, 297.25925925925924, 'sepal length (cm)')
+>>> plt.ylabel(iris.feature_names[1])
+Text(18.88888888888889, 0.5, 'sepal width (cm)')
+>>> plt.tight_layout()
+>>> plt.subplot(3,1,1)
+<AxesSubplot:>
+>>> plt.scatter(iris.data[:, 0], iris.data[:, 1], c='C0', label='raw')
+<matplotlib.collections.PathCollection at 0x7ffc298f6d68>
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7ffc298f30b8>
+>>> plt.tight_layout()
+>>> plt.subplot(3,1,2)
+<AxesSubplot:>
+>>> plt.scatter(iris.data[:, 0], iris.data[:, 1], c=iris.target, label='truth')
+<matplotlib.collections.PathCollection at 0x7ffc2990bc18>
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7ffc298d12e8>
+>>> plt.tight_layout()
+>>> plt.subplot(3,1,3)
+<AxesSubplot:>
+>>> plt.scatter(iris.data[:, 0], iris.data[:, 1], c=predicted, label='predicted')
+<matplotlib.collections.PathCollection at 0x7ffc2b0bb710>
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7ffc2b070be0>
+>>> plt.xlabel(iris.feature_names[0])
+Text(0.5, -28.555555555555557, 'sepal length (cm)')
+>>> plt.ylabel(iris.feature_names[1])
+Text(18.88888888888889, 0.5, 'sepal width (cm)')
+>>> plt.tight_layout()
+>>> # With k means the default is 8 clusters
+>>> # I need to specify how many clusters... how do i know what to use?
+>>> # Distortion is the sum of the squared distance from each point to its assigned center
+>>> # THis is stored in the model as "intertia_"
+>>> cluster_model.intertia_
+>>> cluster_model.inertia_
+30.094948146056844
+>>> # The elbow method
+>>> # looking for the "elbow" or inflection point the distortion plot
+>>> distortions = []
+>>> K = range(1,16)
+>>> for k in K:
+...     model = KMeans(n_cluster=k)
+...     model.fit(iris.data)
+...     distortions.append(model.intertia_)
+...
+>>> for k in K:
+...     model = KMeans(n_clusters=k)
+...     model.fit(iris.data)
+...     distortions.append(model.intertia_)
+...
+>>> for k in K:
+...     model = KMeans(n_clusters=k)
+...     model.fit(iris.data)
+...     distortions.append(model.inertia_)
+...
+>>> len(distortions)
+15
+>>> distortions
+[681.3706,
+ 152.34795176035792,
+ 78.85144142614601,
+ 57.228473214285714,
+ 46.44618205128205,
+ 39.03998724608725,
+ 34.436538396386226,
+ 29.990426406926414,
+ 28.149613552161036,
+ 25.834054819972508,
+ 24.11306800969816,
+ 22.658556899241113,
+ 21.496085735171263,
+ 20.000479965940492,
+ 18.749691562315135]
+>>> plt.figure()
+<Figure size 1280x960 with 0 Axes>
+>>> plt.plot(K, distortions, 'C0-o')
+[<matplotlib.lines.Line2D at 0x7ffc2b83c2e8>]
+>>> plt.xlabel('K[1,15]')
+Text(0.5, 47.04444444444444, 'K[1,15]')
+>>> plt.ylabel('Distortion')
+Text(76.56944444444443, 0.5, 'Distortion')
+>>> plt.title('Elbow Method')
+Text(0.5, 1.0, 'Elbow Method')
+>>> plt.tight_layout()
+>>> cluster_model = KMeans(n_clusters=3)  # k=3 from the elbow method
+>>> cluster_model.fit(iris.data)
+KMeans(algorithm='auto', copy_x=True, init='k-means++', max_iter=300,
+       n_clusters=3, n_init=10, n_jobs=None, precompute_distances='auto',
+       random_state=None, tol=0.0001, verbose=0)
+>>> plt.subplot(3,1,1)
+<AxesSubplot:>
+>>> plt.scatter(iris.data[:, 0], iris.data[:, 1], c='C0', label='raw')
+<matplotlib.collections.PathCollection at 0x7ffc298f6d30>
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7ffc2b0bb390>
+>>> plt.subplot(3,1,2)
+<AxesSubplot:>
+>>> plt.scatter(iris.data[:, 0], iris.data[:, 1], c=iris.target, label='truth')
+<matplotlib.collections.PathCollection at 0x7ffc2b895470>
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7ffc29160eb8>
+>>> plt.subplot(3,1,3)
+<AxesSubplot:>
+>>> predicted = cluster_model.predict(iris.data)
+>>> plt.scatter(iris.data[:, 0], iris.data[:, 1], c=predicted, label='predicted')
+<matplotlib.collections.PathCollection at 0x7ffc2b8f4f28>
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7ffc2b8a84e0>
+>>> plt.tight_layout()
+>>> ones = np.where(predicted==1)
+>>> zeros = np.where(predicted==0)
+>>> predicted[ones] = 0
+>>> predicted[zeros] = 1
+>>> plt.cla()
+>>> plt.scatter(iris.data[:, 0], iris.data[:, 1], c=predicted, label='predicted')
+<matplotlib.collections.PathCollection at 0x7ffc2b8aff60>
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7ffc2b079470>
+>>> plt.tight_layout()
+>>> clear
+>>> # Slide 239
+>>> from sklearn.cluster import AffinityPropagation
+>>> model = AffinityPropagation()
+>>> model.fit(iris.data)
+AffinityPropagation(affinity='euclidean', convergence_iter=15, copy=True,
+                    damping=0.5, max_iter=200, preference=None, verbose=False)
+>>> predicted = model.predict(iris.data)
+>>> model.cluster_centers-
+>>> model.cluster_centers_
+array([[4.7, 3.2, 1.3, 0.2],
+       [5.3, 3.7, 1.5, 0.2],
+       [6.5, 2.8, 4.6, 1.5],
+       [5.6, 2.5, 3.9, 1.1],
+       [6. , 2.7, 5.1, 1.6],
+       [7.6, 3. , 6.6, 2.1],
+       [6.8, 3. , 5.5, 2.1]])
+>>> # number of self-found/governed clusters
+>>> len(model.cluster_centers_)
+7
+>>> plt.subplot(3,1,1)
+<AxesSubplot:>
+>>> plt.scatter(iris.data[:, 0], iris.data[:, 1], c='C0', label='raw')
+<matplotlib.collections.PathCollection at 0x7ffc2c3f6710>
+>>> plt.subplot(312)
+<AxesSubplot:>
+>>> plt.scatter(iris.data[:, 0], iris.data[:, 1], c=iris.target, label='truth')
+<matplotlib.collections.PathCollection at 0x7ffc28590cc0>
+>>> plt.subplot(313)
+<AxesSubplot:>
+>>> plt.scatter(iris.data[:, 0], iris.data[:, 1], c=predicted, label='predicted')
+<matplotlib.collections.PathCollection at 0x7ffc285e4198>
+>>> plt.scatter(model.cluster_centers_[:, 0], model.cluster_centers_[:, 1], c='red', marker='X', s=30, label='center')
+<matplotlib.collections.PathCollection at 0x7ffc285e90b8>
+>>> plt.legend()
+<matplotlib.legend.Legend at 0x7ffc2c4511d0>
+>>> # Slide 246 Example of cluster evaluation
+>>> from sklearn.cluster import KMeans
+>>> from sklearn.metrics import mutual_info_score, adjusted_mutual_infor_score, silhouette_score
+>>> from sklearn.metrics import mutual_info_score, adjusted_mutual_info_score, silhouette_score
+>>> iris = datasets.load_iris()
+>>> model_8 = KMeans()
+>>> model_3 = KMeans(n_clusters=3)
+>>> model_8.fit(iris.data)
+KMeans(algorithm='auto', copy_x=True, init='k-means++', max_iter=300,
+       n_clusters=8, n_init=10, n_jobs=None, precompute_distances='auto',
+       random_state=None, tol=0.0001, verbose=0)
+>>> model_3.fit(iris.data)
+KMeans(algorithm='auto', copy_x=True, init='k-means++', max_iter=300,
+       n_clusters=3, n_init=10, n_jobs=None, precompute_distances='auto',
+       random_state=None, tol=0.0001, verbose=0)
+>>> preds_8 = model_8.predict(iris.data)
+>>> preds_3 = model_3.predict(iris.data)
+>>> for preds in [preds_8, preds_3]:
+...     print(f"{mutual_info_score(iris.target, preds)}")
+...     print(f"{adjusted_mututal_info_score(iris.target, preds)}")
+...     print(f"{silhouette_score(iris.data, preds)}")
+...
+>>> for preds in [preds_8, preds_3]:
+...     print(f"{mutual_info_score(iris.target, preds)}")
+...     print(f"{adjusted_mutual_info_score(iris.target, preds)}")
+...     print(f"{silhouette_score(iris.data, preds)}")
+...
+>>> for preds in [preds_8, preds_3]:
+...     print(f"{mutual_info_score(iris.target, preds)}")
+...     print(f"{adjusted_mutual_info_score(iris.target, preds)}")
+...     print(f"{silhouette_score(iris.data, preds)}")
+...     print('-'*25)
+...
+>>> # silhouette_score taks the data and the preds, it is used when we don't have truth
+>>> # MI has a range from 0-1, AMI hasa a range from 0-1, and the SC from -1 to 1
+>>> clf
+>>> modle
+>>> model
+AffinityPropagation(affinity='euclidean', convergence_iter=15, copy=True,
+                    damping=0.5, max_iter=200, preference=None, verbose=False)
+>>> model.get_params()
+{'affinity': 'euclidean',
+ 'convergence_iter': 15,
+ 'copy': True,
+ 'damping': 0.5,
+ 'max_iter': 200,
+ 'preference': None,
+ 'verbose': False}
+>>> # ML end to end workflow
+>>> ls
+>>> %history -pof day5_PM.txt

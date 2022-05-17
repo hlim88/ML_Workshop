@@ -1,0 +1,220 @@
+>>> # MLW 2022-05-09 Day 1 PM
+>>> # Tensorflow example
+>>> # model.compile(optimizer='SGD', loss='mse')
+>>> # SGDRegressor(loss='squared_error')
+>>> # Slide 94 (example code)
+>>> # Examples of the API (.fit, .predict, .score)
+>>> from sklearn import datasets
+>>> iris = dataset.load_iris()
+>>> iris = datasets.load_iris()
+>>> from sklearn.svm import LinearSVC
+>>> model = LinearSVC()
+>>> # When we instantiate a model, it uses all of the default values to create an instance of the model architecture
+>>> print(model)
+>>> # Most all of the defaults are sensible, "good places to start"
+>>> dir(model)
+['C',
+ '__class__',
+ '__delattr__',
+ '__dict__',
+ '__dir__',
+ '__doc__',
+ '__eq__',
+ '__format__',
+ '__ge__',
+ '__getattribute__',
+ '__getstate__',
+ '__gt__',
+ '__hash__',
+ '__init__',
+ '__init_subclass__',
+ '__le__',
+ '__lt__',
+ '__module__',
+ '__ne__',
+ '__new__',
+ '__reduce__',
+ '__reduce_ex__',
+ '__repr__',
+ '__setattr__',
+ '__setstate__',
+ '__sizeof__',
+ '__str__',
+ '__subclasshook__',
+ '__weakref__',
+ '_estimator_type',
+ '_get_param_names',
+ '_get_tags',
+ '_more_tags',
+ '_predict_proba_lr',
+ 'class_weight',
+ 'decision_function',
+ 'densify',
+ 'dual',
+ 'fit',
+ 'fit_intercept',
+ 'get_params',
+ 'intercept_scaling',
+ 'loss',
+ 'max_iter',
+ 'multi_class',
+ 'penalty',
+ 'predict',
+ 'random_state',
+ 'score',
+ 'set_params',
+ 'sparsify',
+ 'tol',
+ 'verbose']
+>>> [thing for thing in dir(model) if (not thing.startswith('_')) and (thing.endswith('_'))]
+[]
+>>> [thing for thing in dir(model) if (not thing.startswith('_'))]
+['C',
+ 'class_weight',
+ 'decision_function',
+ 'densify',
+ 'dual',
+ 'fit',
+ 'fit_intercept',
+ 'get_params',
+ 'intercept_scaling',
+ 'loss',
+ 'max_iter',
+ 'multi_class',
+ 'penalty',
+ 'predict',
+ 'random_state',
+ 'score',
+ 'set_params',
+ 'sparsify',
+ 'tol',
+ 'verbose']
+>>> # There is nothing, currently, that ends with a '_'
+>>> [thing for thing in dir(model) if (not thing.startswith('_')) and (thing.endswith('_'))]
+[]
+>>> model.fit(iris.data, iris.target)
+LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+          intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+          multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+          verbose=0)
+>>> # Anything that is learned during the .fit() call is saved with a '_' suffix (ends with _)
+>>> [thing for thing in dir(model) if (not thing.startswith('_')) and (thing.endswith('_'))]
+['classes_', 'coef_', 'intercept_', 'n_iter_']
+>>> model.classes_
+array([0, 1, 2])
+>>> model.coef_
+array([[ 0.18423383,  0.45122579, -0.80794256, -0.45071548],
+       [ 0.05645462, -0.89839764,  0.40788834, -0.9605589 ],
+       [-0.85046159, -0.98662702,  1.38108939,  1.86535728]])
+>>> model.intercept_
+array([ 0.10956018,  1.67789108, -1.70960046])
+>>> model.n_iter_
+1000
+>>> # Reason we have 3 intercepts is because we have 3 features
+>>> iris.data.shape
+(150, 4)
+>>> # Reason we have 3 intercepts is because we have 3 classes
+>>> np.unique(iris.target)
+>>> import numpy as np
+>>> np.unique(iris.target)
+array([0, 1, 2])
+>>> iris.target
+array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
+>>> # reason we have a 3x4 coef_ matrix is because we have 3 classes and 4 feauters
+>>> # We have things stored ending in "_"
+>>> # we also have the ability to call .predict() and .score()
+>>> model.predict(iris.data)
+array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2,
+       2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
+>>> model.score(iris.data, iris.targer)
+>>> model.score(iris.data, iris.target)
+0.9666666666666667
+>>> # Defaults to R2
+>>> preds = model.predict(iris.data, iris.targer)
+>>> preds = model.predict(iris.data, iris.target)
+>>> preds = model.predict(iris.data)
+>>> %matplotlib qt
+>>> import matplotlib.pyplot as plt
+>>> plt.figure(figsize=(10,8))
+<Figure size 2000x1600 with 0 Axes>
+>>> errors = preds != iris.targets
+>>> errors = preds != iris.target
+>>> errors
+array([False, False, False, False, False, False, False, False, False,
+       False, False, False, False, False, False, False, False, False,
+       False, False, False, False, False, False, False, False, False,
+       False, False, False, False, False, False, False, False, False,
+       False, False, False, False, False, False, False, False, False,
+       False, False, False, False, False, False, False, False, False,
+       False, False, False, False, False, False, False, False, False,
+       False, False, False, False, False, False, False,  True, False,
+       False, False, False, False, False, False, False, False, False,
+       False, False,  True,  True, False, False, False, False, False,
+       False, False, False, False, False, False, False, False, False,
+       False, False, False, False, False, False, False, False, False,
+       False, False, False, False, False, False, False, False, False,
+       False, False, False, False, False, False, False, False, False,
+       False, False, False,  True, False, False, False,  True, False,
+       False, False, False, False, False, False, False, False, False,
+       False, False, False, False, False, False])
+>>> errors.sum()
+5
+>>> # We have 4 feautres and 3 classes... going to use a 2D example for linear plotting even though we have higher dimes
+>>> plt.plt(iris.data[:, 0], iris.data[:,1], c=iris.target, edgecolor='k')
+>>> plt.plot(iris.data[:, 0], iris.data[:,1], c=iris.target, edgecolor='k')
+>>> plt.scatter(iris.data[:, 0], iris.data[:,1], c=iris.target, edgecolor='k')
+<matplotlib.collections.PathCollection at 0x7fda7f9212e8>
+>>> plt.scatter(iris.data[errors, 0], iris.data[erros,1], c='red', marker='X', s=30)
+>>> plt.scatter(iris.data[errors, 0], iris.data[errors,1], c='red', marker='X', s=30)
+<matplotlib.collections.PathCollection at 0x7fda7f97d160>
+>>> plt.xlabel('sepal lenght (cm)')
+Text(0.5, 117.4444444444444, 'sepal lenght (cm)')
+>>> plt.ylabel('sepal width (cm)')
+Text(175.31944444444443, 0.5, 'sepal width (cm)')
+>>> est_class = model.__class__.__name__
+>>> est_class
+'LinearSVC'
+>>> est_score = model.score(iris.data, iris.target)
+>>> est_score
+0.9666666666666667
+>>> miss = errors.sum()
+>>> miss
+5
+>>> plt.title(
+...     "Example Dataset\n"
+...     + f"Est: {est_class}"
+...     + f"Score: {est_score}"
+...     + f"Misclassification(s): {miss}"
+... )
+...
+Text(0.5, 1.0, 'Example Dataset\nEst: LinearSVCScore: 0.9666666666666667Misclassification(s): 5')
+>>> plt.title(
+...     "Example Dataset\n"
+...     + f"Est: {est_class}"
+...     + f"Score: {est_score:.2f}"
+...     + f"Misclassification(s): {miss}"
+... )
+...
+Text(0.5, 1.0, 'Example Dataset\nEst: LinearSVCScore: 0.97Misclassification(s): 5')
+>>> plt.title(
+...     "Example Dataset\n"
+...     + f"Est: {est_class}"
+...     + f"Score: {est_score:.2f}\n"
+...     + f"Misclassification(s): {miss}"
+... )
+...
+Text(0.5, 1.0, 'Example Dataset\nEst: LinearSVCScore: 0.97\nMisclassification(s): 5')
+>>> # Slide 95
+>>> ls
+>>> %history -pof day1_PM.txt
